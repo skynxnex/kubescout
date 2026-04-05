@@ -1,5 +1,8 @@
 # Kubescout — Kubernetes Service Summary
 
+[![Docker Hub](https://img.shields.io/docker/pulls/skynxnex/kubescout?label=Docker%20Hub&logo=docker)](https://hub.docker.com/r/skynxnex/kubescout)
+[![Image Size](https://img.shields.io/docker/image-size/skynxnex/kubescout/latest)](https://hub.docker.com/r/skynxnex/kubescout)
+
 Kubescout is a Kotlin/Spring Boot dashboard for monitoring Kubernetes services, pods, and resource usage. It provides a visual overview of service health, pod-level CPU/memory details, auto-refresh every 60 seconds, and a suite of operational tools including pod log streaming, events timeline, deployment rollback, an exec terminal, ConfigMap/Secret viewer, and service endpoint/ingress inspection — all served through a browser UI with six visual themes and animated backgrounds. Log platform links (Humio/LogScale, Grafana, Datadog) can be enabled via the `LOG_*` environment variables.
 
 ## Getting Started (locally)
