@@ -1,0 +1,1647 @@
+/**
+ * World of Warcraft Theme
+ * Classic WoW UI aesthetic — dark navy backgrounds, gold accents,
+ * and the iconic item quality colour system.
+ */
+
+/* ============================================
+   Color Variables
+   ============================================ */
+:root {
+  /* Background Colors */
+  --cyber-bg-dark: #070a12;
+  --cyber-bg-card: rgba(10, 14, 26, 0.92);
+  --cyber-bg-input: rgba(14, 18, 32, 0.95);
+
+  /* WoW Item-Quality Color Palette */
+  --neon-cyan: #0070dd;       /* Rare blue */
+  --neon-magenta: #a335ee;    /* Epic purple */
+  --neon-orange: #ff8000;     /* Legendary orange */
+  --neon-purple: #a335ee;     /* Epic */
+  --neon-green: #1eff00;      /* Uncommon green */
+  --neon-yellow: #ffd100;     /* WoW gold */
+
+  /* Semantic Colors */
+  --color-success: #1eff00;   /* Uncommon green — healthy */
+  --color-warning: #ff8000;   /* Legendary orange — warning */
+  --color-danger: #c41e3a;    /* WoW red — danger/death */
+  --color-info: #0070dd;      /* Rare blue — info */
+
+  /* Text Colors */
+  --text-primary: #ffd100;    /* WoW gold */
+  --text-secondary: #c8a84b;  /* Muted gold */
+  --text-muted: #6b5a2a;      /* Dark gold/brown */
+
+  /* Accent RGB for rgba() usage in base.css */
+  --color-accent-rgb: 255, 209, 0;
+
+  /* Glow Effects — warm and magical */
+  --glow-cyan:    0 0 20px rgba(0, 112, 221, 0.6), 0 0 40px rgba(0, 112, 221, 0.2);
+  --glow-magenta: 0 0 20px rgba(163, 53, 238, 0.5);
+  --glow-orange:  0 0 20px rgba(255, 128, 0, 0.6);
+  --glow-yellow:  0 0 20px rgba(255, 209, 0, 0.5);
+  --glow-green:   0 0 20px rgba(30, 255, 0, 0.4);
+}
+
+/* ============================================
+   Animated Background
+   ============================================ */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 209, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 209, 0, 0.03) 1px, transparent 1px);
+  animation: gridMove 30s linear infinite;
+}
+
+.glow-orb {
+  opacity: 0.2;
+}
+
+.glow-orb-1 {
+  background: radial-gradient(circle, #0070dd, transparent);
+}
+
+.glow-orb-2 {
+  background: radial-gradient(circle, #a335ee, transparent);
+}
+
+.glow-orb-3 {
+  background: radial-gradient(circle, #ffd100, transparent);
+}
+
+/* ============================================
+   Floating Refresh Button
+   ============================================ */
+.floating-refresh {
+  background: linear-gradient(135deg, #b8960c, #ffd100);
+  box-shadow: 0 8px 24px rgba(255, 209, 0, 0.4);
+}
+
+.floating-refresh:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(255, 209, 0, 0.6);
+}
+
+.floating-refresh.spinning svg {
+  animation: spin 1s linear infinite;
+}
+
+/* ============================================
+   Notifications
+   ============================================ */
+.notification {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: slideDown 0.3s ease-out;
+}
+
+.notification.removing {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.notification.error {
+  border-color: var(--color-danger);
+  background: rgba(196, 30, 58, 0.1);
+}
+
+.notification.success {
+  border-color: var(--color-success);
+  background: rgba(30, 255, 0, 0.08);
+}
+
+.notification.warning {
+  border-color: var(--color-warning);
+  background: rgba(255, 128, 0, 0.1);
+}
+
+.notification.info {
+  border-color: var(--color-info);
+  background: rgba(0, 112, 221, 0.1);
+}
+
+.notification.error .notification-icon svg   { color: var(--color-danger); }
+.notification.success .notification-icon svg { color: var(--color-success); }
+.notification.warning .notification-icon svg { color: var(--color-warning); }
+.notification.info .notification-icon svg    { color: var(--color-info); }
+
+.notification-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.glitch-text {
+  background: linear-gradient(135deg, #ffd100, #c8a84b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pulse-dot {
+  background: var(--neon-green);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--neon-green);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+.meta-info code {
+  color: var(--neon-yellow);
+}
+
+/* ============================================
+   Controls
+   ============================================ */
+.section-label {
+  color: var(--neon-yellow);
+}
+
+.cyber-input:focus,
+.cyber-select:focus {
+  border-color: var(--neon-yellow);
+  box-shadow: var(--glow-yellow);
+}
+
+.select-icon {
+  color: var(--neon-yellow);
+}
+
+.search-input:focus {
+  border-color: var(--neon-yellow);
+  box-shadow: var(--glow-yellow);
+}
+
+.search-clear:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Filter Chips */
+.filter-chip:hover {
+  border-color: var(--neon-yellow);
+  background: rgba(255, 209, 0, 0.1);
+}
+
+.filter-chip.active {
+  background: rgba(255, 209, 0, 0.15);
+  border-color: var(--neon-yellow);
+  color: var(--neon-yellow);
+  box-shadow: var(--glow-yellow);
+}
+
+.filter-chip.active svg {
+  color: var(--neon-yellow);
+}
+
+.filter-chip.active span {
+  color: var(--neon-yellow);
+}
+
+/* Buttons */
+.cyber-button:hover {
+  border-color: var(--neon-yellow);
+  background: rgba(255, 209, 0, 0.1);
+  box-shadow: var(--glow-yellow);
+}
+
+.cyber-button-primary {
+  background: linear-gradient(135deg, #b8960c, #ffd100);
+  border: none;
+  color: #0d0a00;
+  box-shadow: 0 4px 16px rgba(255, 209, 0, 0.4);
+}
+
+.cyber-button-primary:hover {
+  box-shadow: 0 6px 24px rgba(255, 209, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+.loading-indicator {
+  color: var(--neon-yellow);
+}
+
+.cyber-spinner {
+  border-top-color: var(--neon-yellow);
+  animation: spin 0.8s linear infinite;
+}
+
+/* ============================================
+   Modern Table Styling
+   ============================================ */
+.modern-table-container {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 209, 0, 0.12);
+}
+
+.modern-table th {
+  color: var(--neon-yellow);
+}
+
+.modern-table tbody tr:hover {
+  background: rgba(255, 209, 0, 0.05);
+  border-left: 3px solid var(--neon-yellow);
+}
+
+.modern-table tbody tr.clickable:hover {
+  background: rgba(255, 209, 0, 0.08);
+  box-shadow: inset 0 0 20px rgba(255, 209, 0, 0.06);
+}
+
+/* Status indicators */
+.modern-table tbody tr.row-bad {
+  background: rgba(196, 30, 58, 0.15);
+  border-left: 3px solid var(--color-danger);
+}
+
+.modern-table tbody tr.row-warn {
+  background: rgba(255, 128, 0, 0.12);
+  border-left: 3px solid var(--color-warning);
+}
+
+.modern-table tbody tr.row-single {
+  background: rgba(0, 112, 221, 0.1);
+  border-left: 3px solid var(--color-info);
+}
+
+/* Status badges */
+.badge-success {
+  background: rgba(30, 255, 0, 0.15);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.badge-warning {
+  background: rgba(255, 128, 0, 0.15);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+  text-shadow: 0 0 10px rgba(255, 128, 0, 0.5);
+}
+
+.badge-danger {
+  background: rgba(196, 30, 58, 0.2);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.badge-info {
+  background: rgba(0, 112, 221, 0.15);
+  color: var(--color-info);
+  border: 1px solid var(--color-info);
+}
+
+/* Status badges with glow effects */
+.status-badge svg {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.status-badge.ok {
+  background: linear-gradient(135deg, rgba(30, 255, 0, 0.15), rgba(30, 255, 0, 0.08));
+  color: var(--neon-green);
+  border-color: var(--neon-green);
+  box-shadow: 0 0 10px rgba(30, 255, 0, 0.2);
+}
+
+.status-badge.ok:hover {
+  background: linear-gradient(135deg, rgba(30, 255, 0, 0.25), rgba(30, 255, 0, 0.12));
+  box-shadow: 0 0 15px rgba(30, 255, 0, 0.35);
+}
+
+.status-badge.warn {
+  background: linear-gradient(135deg, rgba(255, 128, 0, 0.2), rgba(255, 128, 0, 0.12));
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+  box-shadow: 0 0 10px rgba(255, 128, 0, 0.3);
+  animation: status-pulse-warning 3s ease-in-out infinite;
+}
+
+@keyframes status-pulse-warning {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 128, 0, 0.3); }
+  50%       { box-shadow: 0 0 20px rgba(255, 128, 0, 0.55); }
+}
+
+.status-badge.warn:hover {
+  background: linear-gradient(135deg, rgba(255, 128, 0, 0.3), rgba(255, 128, 0, 0.18));
+}
+
+.status-badge.bad {
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.25), rgba(196, 30, 58, 0.15));
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+  box-shadow: 0 0 15px rgba(196, 30, 58, 0.4),
+              0 0 30px rgba(196, 30, 58, 0.2);
+  animation: status-pulse-danger 2s ease-in-out infinite;
+}
+
+@keyframes status-pulse-danger {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(196, 30, 58, 0.4),
+                0 0 30px rgba(196, 30, 58, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(196, 30, 58, 0.6),
+                0 0 40px rgba(196, 30, 58, 0.3);
+  }
+}
+
+.status-badge.bad:hover {
+  background: linear-gradient(135deg, rgba(196, 30, 58, 0.35), rgba(196, 30, 58, 0.22));
+  transform: scale(1.02);
+}
+
+.status-badge.single-pod {
+  background: linear-gradient(135deg, rgba(163, 53, 238, 0.2), rgba(0, 112, 221, 0.15));
+  color: var(--neon-magenta);
+  border-color: var(--neon-magenta);
+  box-shadow: 0 0 10px rgba(163, 53, 238, 0.3);
+}
+
+.status-badge.single-pod:hover {
+  background: linear-gradient(135deg, rgba(163, 53, 238, 0.3), rgba(0, 112, 221, 0.2));
+  box-shadow: 0 0 15px rgba(163, 53, 238, 0.5);
+  transform: scale(1.05);
+}
+
+/* Restart reason badges */
+.restart-badge.oomkilled {
+  background: rgba(196, 30, 58, 0.15);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.restart-badge.oomkilled:hover {
+  background: rgba(196, 30, 58, 0.25);
+  box-shadow: 0 0 10px rgba(196, 30, 58, 0.5);
+  transform: scale(1.1);
+}
+
+.restart-badge.error {
+  background: rgba(255, 128, 0, 0.15);
+  color: var(--neon-orange);
+  border: 1px solid var(--neon-orange);
+}
+
+.restart-badge.error:hover {
+  background: rgba(255, 128, 0, 0.25);
+  box-shadow: 0 0 10px rgba(255, 128, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.restart-badge.completed {
+  background: rgba(0, 112, 221, 0.15);
+  color: var(--neon-cyan);
+  border: 1px solid var(--neon-cyan);
+}
+
+.restart-badge.completed:hover {
+  background: rgba(0, 112, 221, 0.25);
+  box-shadow: 0 0 10px rgba(0, 112, 221, 0.5);
+  transform: scale(1.1);
+}
+
+/* ============================================
+   Pod Cards
+   ============================================ */
+.pod-card {
+  background: linear-gradient(135deg,
+    rgba(255, 209, 0, 0.02) 0%,
+    rgba(0, 112, 221, 0.02) 100%);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 209, 0, 0.15);
+}
+
+.pod-card:hover {
+  border-color: var(--neon-yellow);
+  box-shadow: var(--glow-yellow);
+}
+
+.pod-card::before {
+  background: linear-gradient(90deg,
+    var(--neon-yellow) 0%,
+    var(--neon-orange) 50%,
+    var(--neon-magenta) 100%);
+}
+
+.pod-card:hover::before {
+  opacity: 1;
+}
+
+.pod-name {
+  color: var(--neon-yellow);
+}
+
+.pod-link {
+  background: linear-gradient(135deg, var(--neon-yellow), var(--neon-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pod-link:hover {
+  filter: brightness(1.2);
+  text-shadow: 0 0 10px rgba(255, 209, 0, 0.5);
+}
+
+/* Pod phase badges */
+.pod-phase-badge.running {
+  background: rgba(30, 255, 0, 0.12);
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+}
+
+.pod-phase-badge.running:hover {
+  box-shadow: 0 0 12px rgba(30, 255, 0, 0.4);
+}
+
+.pod-phase-badge.pending {
+  background: rgba(255, 128, 0, 0.12);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+  animation: pulse-yellow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-yellow {
+  0%, 100% { box-shadow: 0 0 0 rgba(255, 128, 0, 0.4); }
+  50%       { box-shadow: 0 0 12px rgba(255, 128, 0, 0.6); }
+}
+
+.pod-phase-badge.failed,
+.pod-phase-badge.error {
+  background: rgba(196, 30, 58, 0.12);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.pod-phase-badge.failed:hover,
+.pod-phase-badge.error:hover {
+  box-shadow: 0 0 12px rgba(196, 30, 58, 0.5);
+}
+
+.pod-phase-badge.succeeded,
+.pod-phase-badge.completed {
+  background: rgba(30, 255, 0, 0.12);
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+}
+
+.pod-phase-badge.crashloop {
+  background: rgba(196, 30, 58, 0.15);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+  animation: pulse-red 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 rgba(196, 30, 58, 0.4); }
+  50%       { box-shadow: 0 0 12px rgba(196, 30, 58, 0.7); }
+}
+
+.pod-phase-badge.imagepull {
+  background: rgba(255, 128, 0, 0.12);
+  color: var(--neon-orange);
+  border: 1px solid var(--neon-orange);
+}
+
+.pod-phase-badge.imagepull:hover {
+  box-shadow: 0 0 12px rgba(255, 128, 0, 0.5);
+}
+
+.pod-phase-badge.terminating {
+  background: rgba(163, 53, 238, 0.12);
+  color: var(--neon-purple);
+  border: 1px solid var(--neon-purple);
+  animation: fade-pulse 2s ease-in-out infinite;
+}
+
+.pod-phase-badge.evicted,
+.pod-phase-badge.unknown {
+  background: rgba(107, 90, 42, 0.15);
+  color: var(--text-muted);
+  border: 1px solid var(--text-muted);
+}
+
+/* Resource usage progress bars */
+.resource-value {
+  color: var(--neon-yellow);
+}
+
+.progress-bar {
+  background: rgba(14, 18, 32, 0.95);
+}
+
+.progress-fill {
+  box-shadow: 0 0 8px currentColor;
+}
+
+.progress-fill::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+.progress-fill.low {
+  background: linear-gradient(90deg, var(--neon-green), #0070dd);
+}
+
+.progress-fill.medium {
+  background: linear-gradient(90deg, #0070dd, var(--neon-purple));
+}
+
+.progress-fill.high {
+  background: linear-gradient(90deg, var(--neon-orange), var(--color-danger));
+}
+
+/* ============================================
+   Links
+   ============================================ */
+a:hover {
+  color: var(--neon-orange);
+  text-shadow: 0 0 10px currentColor;
+}
+
+/* ============================================
+   Expand Button
+   ============================================ */
+.expand-button {
+  color: var(--neon-yellow);
+}
+
+.expand-button:hover {
+  border-color: var(--neon-yellow);
+  background: rgba(255, 209, 0, 0.1);
+  box-shadow: 0 0 15px rgba(255, 209, 0, 0.3);
+}
+
+/* ============================================
+   Loading Overlay
+   ============================================ */
+.loading-overlay {
+  background: rgba(7, 10, 18, 0.92);
+}
+
+/* ============================================
+   WoW Authentic UI Enhancements
+   ============================================ */
+
+/* 1. Body background — layered stone/dungeon texture */
+body[data-theme="warcraft"] body {
+  background-color: #070a12;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(163, 53, 238, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(0, 112, 221, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 209, 0, 0.03) 0%, transparent 50%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 209, 0, 0.008) 2px,
+      rgba(255, 209, 0, 0.008) 4px
+    );
+}
+
+/* 2. Cards / panels — WoW tooltip double-border frame */
+body[data-theme="warcraft"] .modern-table-container,
+body[data-theme="warcraft"] .cyber-controls,
+body[data-theme="warcraft"] .pod-card,
+body[data-theme="warcraft"] .modal-content,
+body[data-theme="warcraft"] .comparison-grid,
+body[data-theme="warcraft"] .comparison-vertical,
+body[data-theme="warcraft"] .warning-box-critical {
+  background: linear-gradient(180deg, #0f1526 0%, #080c1a 100%);
+  border: 1px solid #ffd100;
+  box-shadow:
+    0 0 0 1px #1a1228,
+    inset 0 0 0 1px #3d2e00,
+    inset 0 1px 0 rgba(255, 209, 0, 0.15),
+    0 4px 24px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(255, 209, 0, 0.04);
+  border-radius: 2px;
+}
+
+/* Pod card hover — add golden glow on top of frame */
+body[data-theme="warcraft"] .pod-card:hover {
+  box-shadow:
+    0 0 0 1px #1a1228,
+    inset 0 0 0 1px #3d2e00,
+    inset 0 1px 0 rgba(255, 209, 0, 0.25),
+    0 4px 24px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 209, 0, 0.25);
+  border-color: #ffe566;
+}
+
+/* 3. Service rows — inset panel look */
+body[data-theme="warcraft"] .modern-table tbody tr {
+  border-bottom: 1px solid rgba(255, 209, 0, 0.12);
+}
+
+body[data-theme="warcraft"] .modern-table tbody tr:hover,
+body[data-theme="warcraft"] .modern-table tbody tr.clickable:hover {
+  background: linear-gradient(90deg, rgba(255, 209, 0, 0.07) 0%, rgba(255, 209, 0, 0.02) 100%);
+  border-bottom-color: rgba(255, 209, 0, 0.28);
+  box-shadow: inset 0 0 20px rgba(255, 209, 0, 0.04);
+}
+
+/* Table head — thicker gold separator line */
+body[data-theme="warcraft"] .modern-table thead {
+  background: linear-gradient(180deg, rgba(255, 209, 0, 0.1) 0%, rgba(255, 209, 0, 0.03) 100%);
+  border-bottom: 2px solid rgba(255, 209, 0, 0.5);
+}
+
+/* Deployment history table rows */
+body[data-theme="warcraft"] .deployment-history-table tbody tr:hover {
+  background: rgba(255, 209, 0, 0.06);
+}
+
+body[data-theme="warcraft"] .deployment-history-table th {
+  background: linear-gradient(180deg, rgba(255, 209, 0, 0.08) 0%, rgba(255, 209, 0, 0.02) 100%);
+  border-bottom: 2px solid rgba(255, 209, 0, 0.4);
+  color: #ffd100;
+  text-shadow: 0 0 8px rgba(255, 209, 0, 0.4);
+}
+
+body[data-theme="warcraft"] .deployment-history-table td {
+  border-bottom: 1px solid rgba(255, 209, 0, 0.1);
+}
+
+/* 4. Table column headers — gold with text shadow */
+body[data-theme="warcraft"] .modern-table th {
+  color: #ffd100;
+  text-shadow:
+    0 0 8px rgba(255, 209, 0, 0.5),
+    1px 1px 2px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.12em;
+}
+
+/* 5. Main title — WoW gold gradient with glow */
+body[data-theme="warcraft"] .glitch-text {
+  background: linear-gradient(135deg, #ffe566 0%, #ffd100 40%, #c8a84b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(255, 209, 0, 0.5));
+  letter-spacing: 0.12em;
+}
+
+/* Section labels / headings */
+body[data-theme="warcraft"] .section-label,
+body[data-theme="warcraft"] .section-title,
+body[data-theme="warcraft"] .endpoint-label {
+  color: #ffd100;
+  text-shadow:
+    0 0 8px rgba(255, 209, 0, 0.5),
+    1px 1px 2px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.1em;
+}
+
+/* Modal headers */
+body[data-theme="warcraft"] .modal-header h2 {
+  color: #ffd100;
+  text-shadow:
+    0 0 10px rgba(255, 209, 0, 0.6),
+    0 0 30px rgba(255, 209, 0, 0.2),
+    1px 1px 2px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.08em;
+}
+
+/* 6. Inputs / selects — dark inset WoW style */
+body[data-theme="warcraft"] .cyber-input,
+body[data-theme="warcraft"] .cyber-select,
+body[data-theme="warcraft"] .search-input,
+body[data-theme="warcraft"] .confirmation-input input {
+  background: linear-gradient(180deg, #030509 0%, #070a12 100%);
+  border: 1px solid rgba(255, 209, 0, 0.35);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.8),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.5);
+  color: #ffd100;
+  border-radius: 2px;
+}
+
+body[data-theme="warcraft"] .cyber-input:focus,
+body[data-theme="warcraft"] .cyber-select:focus,
+body[data-theme="warcraft"] .search-input:focus,
+body[data-theme="warcraft"] .confirmation-input input:focus {
+  border-color: #ffd100;
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.8),
+    0 0 0 2px rgba(255, 209, 0, 0.15),
+    0 0 12px rgba(255, 209, 0, 0.3);
+  outline: none;
+}
+
+body[data-theme="warcraft"] .cyber-input::placeholder,
+body[data-theme="warcraft"] .search-input::placeholder {
+  color: #6b5a2a;
+}
+
+/* 7. Buttons — WoW action button style */
+body[data-theme="warcraft"] .cyber-button,
+body[data-theme="warcraft"] .expand-button,
+body[data-theme="warcraft"] .tab-button,
+body[data-theme="warcraft"] .modal-close-btn {
+  background: linear-gradient(180deg, #2a1f08 0%, #1a1204 50%, #0f0c02 100%);
+  border: 1px solid rgba(255, 209, 0, 0.5);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 209, 0, 0.25),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+  color: #c8a84b;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  border-radius: 2px;
+  transition: all 0.1s ease;
+}
+
+body[data-theme="warcraft"] .cyber-button:hover,
+body[data-theme="warcraft"] .expand-button:hover,
+body[data-theme="warcraft"] .modal-close-btn:hover {
+  background: linear-gradient(180deg, #3d2e0d 0%, #2a1f08 50%, #1a1204 100%);
+  border-color: #ffd100;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 209, 0, 0.4),
+    0 0 16px rgba(255, 209, 0, 0.35);
+  color: #ffe566;
+}
+
+/* Primary cyber button — solid gold fill */
+body[data-theme="warcraft"] .cyber-button-primary {
+  background: linear-gradient(180deg, #c8a84b 0%, #b8960c 50%, #9a7a0a 100%);
+  border: 1px solid #ffd100;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 200, 0.3),
+    0 4px 16px rgba(255, 209, 0, 0.35);
+  color: #0d0a00;
+  text-shadow: none;
+}
+
+body[data-theme="warcraft"] .cyber-button-primary:hover {
+  background: linear-gradient(180deg, #ffd100 0%, #c8a84b 50%, #b8960c 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 200, 0.4),
+    0 6px 24px rgba(255, 209, 0, 0.55);
+  transform: translateY(-1px);
+}
+
+/* Danger / warning buttons keep their orange/red identity but with WoW framing */
+body[data-theme="warcraft"] .cyber-button-danger {
+  background: linear-gradient(180deg, #7a1520 0%, #4a0d13 50%, #2e080c 100%);
+  border: 1px solid #c41e3a;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(196, 30, 58, 0.3),
+    0 4px 16px rgba(196, 30, 58, 0.3);
+}
+
+body[data-theme="warcraft"] .cyber-button-danger:hover {
+  background: linear-gradient(180deg, #a01a28 0%, #7a1520 50%, #4a0d13 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(196, 30, 58, 0.4),
+    0 6px 20px rgba(196, 30, 58, 0.5);
+  transform: translateY(-1px);
+}
+
+body[data-theme="warcraft"] .cyber-button-warning {
+  background: linear-gradient(180deg, #5a3a08 0%, #3a2404 50%, #1e1202 100%);
+  border: 1px solid #ff8000;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 128, 0, 0.25),
+    0 4px 16px rgba(255, 128, 0, 0.25);
+}
+
+body[data-theme="warcraft"] .cyber-button-warning:hover {
+  background: linear-gradient(180deg, #7a4e0d 0%, #5a3a08 50%, #3a2404 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 128, 0, 0.35),
+    0 6px 20px rgba(255, 128, 0, 0.45);
+  transform: translateY(-1px);
+}
+
+/* Tab buttons — WoW tab style */
+body[data-theme="warcraft"] .tab-button {
+  padding: 8px 16px;
+  border-bottom: 2px solid transparent;
+}
+
+body[data-theme="warcraft"] .tab-button.active {
+  color: #ffd100;
+  border-bottom-color: #ffd100;
+  text-shadow: 0 0 8px rgba(255, 209, 0, 0.5);
+  background: linear-gradient(180deg, #3d2e0d 0%, #1a1204 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 209, 0, 0.3),
+    0 0 12px rgba(255, 209, 0, 0.2);
+}
+
+body[data-theme="warcraft"] .tab-button:hover:not(.active) {
+  color: #c8a84b;
+}
+
+body[data-theme="warcraft"] .tab-buttons {
+  border-bottom: 2px solid rgba(255, 209, 0, 0.3);
+}
+
+/* Rollback button — legendary orange style */
+body[data-theme="warcraft"] .rollback-btn {
+  background: linear-gradient(180deg, #7a3c00 0%, #4a2400 50%, #2e1600 100%);
+  border: 1px solid #ff8000;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 128, 0, 0.3),
+    0 0 10px rgba(255, 128, 0, 0.25);
+  color: #ff8000;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+body[data-theme="warcraft"] .rollback-btn:hover {
+  background: linear-gradient(180deg, #a05000 0%, #7a3c00 50%, #4a2400 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 128, 0, 0.4),
+    0 0 20px rgba(255, 128, 0, 0.45);
+  transform: translateY(-1px);
+}
+
+/* Modal primary action button */
+body[data-theme="warcraft"] .modal-btn-primary {
+  background: linear-gradient(180deg, #c8a84b 0%, #b8960c 100%);
+  border-color: #ffd100;
+  color: #0d0a00;
+  text-shadow: none;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 200, 0.3);
+}
+
+body[data-theme="warcraft"] .modal-btn-primary:hover {
+  background: linear-gradient(180deg, #ffd100 0%, #c8a84b 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 200, 0.4),
+    0 0 16px rgba(255, 209, 0, 0.4);
+}
+
+body[data-theme="warcraft"] .modal-btn-secondary {
+  background: linear-gradient(180deg, #1a1204 0%, #0f0c02 100%);
+  border-color: rgba(255, 209, 0, 0.3);
+  color: #6b5a2a;
+}
+
+body[data-theme="warcraft"] .modal-btn-secondary:hover {
+  border-color: rgba(255, 209, 0, 0.6);
+  color: #c8a84b;
+  background: linear-gradient(180deg, #2a1f08 0%, #1a1204 100%);
+}
+
+/* 8. Scrollbars — WoW gold on dark */
+body[data-theme="warcraft"] ::-webkit-scrollbar {
+  width: 8px;
+  background: #070a12;
+}
+
+body[data-theme="warcraft"] ::-webkit-scrollbar-track {
+  background: #0a0d18;
+  border-left: 1px solid rgba(255, 209, 0, 0.1);
+}
+
+body[data-theme="warcraft"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ffd100 0%, #c8a84b 100%);
+  border-radius: 1px;
+}
+
+body[data-theme="warcraft"] ::-webkit-scrollbar-thumb:hover {
+  background: #ffe566;
+}
+
+/* 9. Status badges — WoW item quality colors with text glow */
+body[data-theme="warcraft"] .status-badge.ok {
+  color: #1eff00;
+  border-color: #1eff00;
+  text-shadow: 0 0 8px rgba(30, 255, 0, 0.5);
+  box-shadow: 0 0 10px rgba(30, 255, 0, 0.2);
+}
+
+body[data-theme="warcraft"] .status-badge.ok:hover {
+  box-shadow: 0 0 16px rgba(30, 255, 0, 0.4);
+}
+
+body[data-theme="warcraft"] .status-badge.warn {
+  color: #ff8000;
+  border-color: #ff8000;
+  text-shadow: 0 0 8px rgba(255, 128, 0, 0.5);
+}
+
+body[data-theme="warcraft"] .status-badge.bad {
+  color: #c41e3a;
+  border-color: #c41e3a;
+  text-shadow: 0 0 8px rgba(196, 30, 58, 0.6);
+}
+
+body[data-theme="warcraft"] .badge-success {
+  color: #1eff00;
+  border-color: #1eff00;
+  text-shadow: 0 0 6px rgba(30, 255, 0, 0.5);
+}
+
+body[data-theme="warcraft"] .badge-warning {
+  color: #ff8000;
+  border-color: #ff8000;
+  text-shadow: 0 0 6px rgba(255, 128, 0, 0.5);
+}
+
+body[data-theme="warcraft"] .badge-danger {
+  color: #c41e3a;
+  border-color: #c41e3a;
+  text-shadow: 0 0 6px rgba(196, 30, 58, 0.5);
+}
+
+/* Current revision badge — WoW rare blue */
+body[data-theme="warcraft"] .current-badge {
+  background: linear-gradient(135deg, #0070dd, #004a99);
+  border: 1px solid #0070dd;
+  box-shadow: 0 0 8px rgba(0, 112, 221, 0.4);
+  color: #fff;
+}
+
+/* 10. Pod card name/link — WoW rare blue */
+body[data-theme="warcraft"] .pod-name,
+body[data-theme="warcraft"] .pod-card-name {
+  color: #0070dd;
+  text-shadow: 0 0 6px rgba(0, 112, 221, 0.4);
+}
+
+/* 11. Floating refresh button — WoW gold */
+body[data-theme="warcraft"] .floating-refresh {
+  background: linear-gradient(135deg, #c8a84b, #ffd100);
+  border: 1px solid #ffd100;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 200, 0.4),
+    0 8px 24px rgba(255, 209, 0, 0.4);
+}
+
+body[data-theme="warcraft"] .floating-refresh:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 200, 0.5),
+    0 12px 32px rgba(255, 209, 0, 0.6);
+}
+
+/* 12. Theme badge — double-border frame */
+body[data-theme="warcraft"] .theme-badge {
+  background: linear-gradient(180deg, #0f1526 0%, #080c1a 100%);
+  border: 1px solid #ffd100;
+  box-shadow:
+    0 0 0 1px #1a1228,
+    inset 0 0 0 1px #3d2e00;
+}
+
+body[data-theme="warcraft"] .theme-badge:hover {
+  box-shadow:
+    0 0 0 1px #1a1228,
+    inset 0 0 0 1px #3d2e00,
+    0 0 20px rgba(255, 209, 0, 0.4);
+}
+
+/* 13. Section dividers — gold gradient fades */
+body[data-theme="warcraft"] .section-divider,
+body[data-theme="warcraft"] .control-info {
+  border-top-color: rgba(255, 209, 0, 0.2);
+}
+
+body[data-theme="warcraft"] .section-divider {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255, 209, 0, 0.2) 20%,
+    rgba(255, 209, 0, 0.5) 50%,
+    rgba(255, 209, 0, 0.2) 80%,
+    transparent 100%
+  );
+}
+
+/* Pod card header divider */
+body[data-theme="warcraft"] .pod-card-header {
+  border-bottom-color: rgba(255, 209, 0, 0.25);
+}
+
+/* Pod metadata top divider */
+body[data-theme="warcraft"] .pod-metadata {
+  border-top-color: rgba(255, 209, 0, 0.2);
+}
+
+/* 14. Port items and inline code — dark inset style */
+body[data-theme="warcraft"] .port-item,
+body[data-theme="warcraft"] .meta-info code,
+body[data-theme="warcraft"] .deployment-history-table code {
+  background: linear-gradient(180deg, #030509 0%, #070a12 100%);
+  border: 1px solid rgba(255, 209, 0, 0.25);
+  color: #c8a84b;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* 15. Service type badges — keep identity but with WoW panel feel */
+body[data-theme="warcraft"] .service-type-badge.loadbalancer {
+  background: rgba(30, 255, 0, 0.1);
+  border-color: #1eff00;
+  color: #1eff00;
+  text-shadow: 0 0 6px rgba(30, 255, 0, 0.4);
+}
+
+body[data-theme="warcraft"] .service-type-badge.nodeport {
+  background: rgba(0, 112, 221, 0.1);
+  border-color: #0070dd;
+  color: #0070dd;
+  text-shadow: 0 0 6px rgba(0, 112, 221, 0.4);
+}
+
+body[data-theme="warcraft"] .service-type-badge.clusterip {
+  background: rgba(107, 90, 42, 0.15);
+  border-color: #6b5a2a;
+  color: #c8a84b;
+}
+
+/* 16. Filter chips — WoW active state */
+body[data-theme="warcraft"] .filter-chip {
+  background: linear-gradient(180deg, #1a1204 0%, #0f0c02 100%);
+  border-color: rgba(255, 209, 0, 0.25);
+  border-radius: 2px;
+}
+
+body[data-theme="warcraft"] .filter-chip:hover {
+  border-color: rgba(255, 209, 0, 0.5);
+  background: linear-gradient(180deg, #2a1f08 0%, #1a1204 100%);
+}
+
+body[data-theme="warcraft"] .filter-chip.active {
+  background: linear-gradient(180deg, #3d2e0d 0%, #2a1f08 50%, #1a1204 100%);
+  border-color: #ffd100;
+  color: #ffd100;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 209, 0, 0.2),
+    0 0 10px rgba(255, 209, 0, 0.2);
+}
+
+body[data-theme="warcraft"] .filter-chip.active svg,
+body[data-theme="warcraft"] .filter-chip.active span {
+  color: #ffd100;
+}
+
+/* 17. Warning modal (rollback/restart) — danger red frame */
+body[data-theme="warcraft"] .modal-danger-large {
+  border: 2px solid #c41e3a;
+  box-shadow:
+    0 0 0 1px #1a1228,
+    inset 0 0 0 1px rgba(196, 30, 58, 0.3),
+    0 12px 48px rgba(196, 30, 58, 0.4);
+}
+
+body[data-theme="warcraft"] .modal-restart {
+  border: 2px solid #c41e3a;
+  box-shadow:
+    0 0 0 1px #1a1228,
+    inset 0 0 0 1px rgba(196, 30, 58, 0.2),
+    0 8px 32px rgba(196, 30, 58, 0.3);
+}
+
+/* 18. Modal content border — gold default, except danger variants above */
+body[data-theme="warcraft"] .modal-content:not(.modal-danger-large):not(.modal-restart) {
+  border: 1px solid #ffd100;
+  box-shadow:
+    0 0 0 1px #1a1228,
+    inset 0 0 0 1px #3d2e00,
+    inset 0 1px 0 rgba(255, 209, 0, 0.15),
+    0 8px 48px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(255, 209, 0, 0.06);
+}
+
+/* 19. Select icon stays gold */
+body[data-theme="warcraft"] .select-icon {
+  color: #ffd100;
+}
+
+/* 20. Links — WoW rare blue, hover to legendary orange */
+body[data-theme="warcraft"] a {
+  color: #0070dd;
+}
+
+body[data-theme="warcraft"] a:hover {
+  color: #ff8000;
+  text-shadow: 0 0 8px rgba(255, 128, 0, 0.4);
+}
+
+body[data-theme="warcraft"] .pod-link {
+  background: linear-gradient(135deg, #0070dd, #a335ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body[data-theme="warcraft"] .pod-link:hover {
+  filter: brightness(1.3);
+}
+
+/* 21. Notification toasts — WoW tooltip frame */
+body[data-theme="warcraft"] .notification {
+  background: linear-gradient(180deg, #0f1526 0%, #080c1a 100%);
+  box-shadow:
+    0 0 0 1px #1a1228,
+    inset 0 0 0 1px #3d2e00,
+    0 8px 32px rgba(0, 0, 0, 0.8);
+  border-radius: 2px;
+}
+
+body[data-theme="warcraft"] .notification.error {
+  border-color: #c41e3a;
+  background: linear-gradient(180deg, #1a060a 0%, #080c1a 100%);
+}
+
+body[data-theme="warcraft"] .notification.success {
+  border-color: #1eff00;
+  background: linear-gradient(180deg, #061a04 0%, #080c1a 100%);
+}
+
+body[data-theme="warcraft"] .notification.warning {
+  border-color: #ff8000;
+  background: linear-gradient(180deg, #1a0c00 0%, #080c1a 100%);
+}
+
+body[data-theme="warcraft"] .notification.info {
+  border-color: #0070dd;
+  background: linear-gradient(180deg, #00081a 0%, #080c1a 100%);
+}
+
+/* 22. Expanded row content — subtle dark inset */
+body[data-theme="warcraft"] .expanded-content td {
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 209, 0, 0.15);
+}
+
+/* 23. Comparison grid panels in modals */
+body[data-theme="warcraft"] .comparison-vertical .comparison-item {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 209, 0, 0.15);
+}
+
+body[data-theme="warcraft"] .comparison-vertical .comparison-item:first-child {
+  border-color: rgba(196, 30, 58, 0.4);
+}
+
+body[data-theme="warcraft"] .comparison-vertical .comparison-item:last-child {
+  border-color: rgba(30, 255, 0, 0.3);
+}
+
+body[data-theme="warcraft"] .comparison-arrow {
+  color: #ffd100;
+  text-shadow: 0 0 8px rgba(255, 209, 0, 0.5);
+}
+
+/* 24. Warning text */
+body[data-theme="warcraft"] .warning-text {
+  color: #ff8000;
+  text-shadow: 0 0 6px rgba(255, 128, 0, 0.4);
+}
+
+/* 25. Empty state and loading state text */
+body[data-theme="warcraft"] .empty-state {
+  color: #6b5a2a;
+}
+
+/* 26. Controls panel top border line — subtle gold */
+body[data-theme="warcraft"] .cyber-controls {
+  border-top: 2px solid rgba(255, 209, 0, 0.3);
+}
+
+/* ============================================
+   WoW Authentic UI Enhancements — Batch 2
+   ============================================ */
+
+/* ── 1. WoW Font — Cinzel ────────────────── */
+
+/* All text uses Cinzel (serif) when warcraft theme is active */
+body[data-theme="warcraft"] body,
+body[data-theme="warcraft"] * {
+  font-family: 'Cinzel', 'Palatino Linotype', Georgia, serif;
+}
+
+/* Titles and headings use the decorative variant */
+body[data-theme="warcraft"] h1,
+body[data-theme="warcraft"] h2,
+body[data-theme="warcraft"] h3,
+body[data-theme="warcraft"] .glitch-text,
+body[data-theme="warcraft"] [class*="title"] {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  letter-spacing: 0.08em;
+}
+
+/* Monospace elements stay monospace — logs, code, terminal */
+body[data-theme="warcraft"] code,
+body[data-theme="warcraft"] pre,
+body[data-theme="warcraft"] .log-line,
+body[data-theme="warcraft"] [class*="log"],
+body[data-theme="warcraft"] [class*="code"] {
+  font-family: 'Courier New', monospace;
+}
+
+/* ── 2. Health & Mana Bars ───────────────── */
+
+/* .progress-bar is the track; .progress-fill is the coloured fill.
+   The actual progress elements in base.css are div-based, not <progress>,
+   so we style the container and fill separately. */
+
+/* Track — dark inset like a WoW health globe frame */
+body[data-theme="warcraft"] .progress-bar {
+  height: 10px;
+  border-radius: 1px;
+  border: 1px solid #1a0a0a;
+  background: linear-gradient(180deg, #1a0505 0%, #0f0303 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    inset 0 2px 4px rgba(0, 0, 0, 0.7),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+/* Default fill — health bar red (CPU / generic usage) */
+body[data-theme="warcraft"] .progress-fill {
+  border-radius: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 100, 100, 0.25);
+}
+
+/* Low usage — WoW green (uncommon) */
+body[data-theme="warcraft"] .progress-fill.low {
+  background: linear-gradient(180deg, #2adb10 0%, #1a9a0a 50%, #2adb10 100%);
+  box-shadow: inset 0 1px 0 rgba(100, 255, 80, 0.3);
+}
+
+/* Medium usage — WoW rare blue */
+body[data-theme="warcraft"] .progress-fill.medium {
+  background: linear-gradient(180deg, #1a8de0 0%, #0d5fa0 50%, #1a8de0 100%);
+  box-shadow: inset 0 1px 0 rgba(100, 180, 255, 0.3);
+}
+
+/* High usage — WoW danger red (health bar) */
+body[data-theme="warcraft"] .progress-fill.high {
+  background: linear-gradient(180deg, #c41e3a 0%, #8b1425 50%, #c41e3a 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 100, 100, 0.3);
+}
+
+/* Shimmer sweep stays but adapts to the new fill style */
+body[data-theme="warcraft"] .progress-fill::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2.5s infinite;
+}
+
+/* ── 3. Decorative Corner Elements ───────── */
+
+/* WoW panel corner ornaments — gold L-shaped brackets on
+   .modern-table-container (the main service table panel).
+   .pod-card and .modal-content already use ::before/::after
+   for other purposes, so we skip those to avoid conflicts. */
+
+body[data-theme="warcraft"] .modern-table-container {
+  position: relative;
+}
+
+/* Top-left corner bracket */
+body[data-theme="warcraft"] .modern-table-container::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid #ffd100;
+  border-left: 2px solid #ffd100;
+  border-radius: 0;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: -1px -1px 0 rgba(255, 209, 0, 0.25);
+}
+
+/* Bottom-right corner bracket */
+body[data-theme="warcraft"] .modern-table-container::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 14px;
+  height: 14px;
+  border-bottom: 2px solid #ffd100;
+  border-right: 2px solid #ffd100;
+  border-radius: 0;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: 1px 1px 0 rgba(255, 209, 0, 0.25);
+}
+
+/* Pod cards get corner brackets via their inner header border —
+   the ::before stripe on .pod-card is already used for the top accent bar,
+   so we add corner styling through the pod-card-header separator instead */
+body[data-theme="warcraft"] .pod-card-header {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 209, 0, 0.5) 25%,
+    #ffd100 50%,
+    rgba(255, 209, 0, 0.5) 75%,
+    transparent 100%
+  ) 1;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+/* Modal header gold gradient separator */
+body[data-theme="warcraft"] .modal-header {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 209, 0, 0.5) 25%,
+    #ffd100 50%,
+    rgba(255, 209, 0, 0.5) 75%,
+    transparent 100%
+  ) 1;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+/* ── 4. Achievement Toast Style ──────────── */
+
+/* Base notification — WoW achievement banner dark frame */
+body[data-theme="warcraft"] .notification {
+  background: linear-gradient(135deg, #1a1204 0%, #0f0c08 40%, #1a1204 100%);
+  border: 1px solid #ffd100;
+  box-shadow:
+    0 0 0 1px #0a0800,
+    inset 0 0 0 1px rgba(255, 209, 0, 0.12),
+    0 0 24px rgba(255, 209, 0, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.8);
+  border-radius: 2px;
+  color: #ffd100;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.04em;
+  padding-left: 52px;
+  position: relative;
+}
+
+/* Sword icon in the left gutter — info/default toasts */
+body[data-theme="warcraft"] .notification:not(.error):not(.success):not(.warning)::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffd100' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='14.5 17.5 3 6 3 3 6 3 17.5 14.5'/%3E%3Cline x1='13' y1='19' x2='19' y2='13'/%3E%3Cline x1='16' y1='16' x2='20' y2='20'/%3E%3Cline x1='19' y1='21' x2='21' y2='19'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 4px rgba(255, 209, 0, 0.7));
+  flex-shrink: 0;
+}
+
+/* "ACHIEVEMENT UNLOCKED" micro-label above the message text for info toasts */
+body[data-theme="warcraft"] .notification-content::before {
+  content: 'ACHIEVEMENT UNLOCKED';
+  display: block;
+  font-size: 0.58em;
+  letter-spacing: 0.18em;
+  color: rgba(255, 209, 0, 0.45);
+  font-family: 'Cinzel', serif;
+  margin-bottom: 1px;
+  line-height: 1.2;
+}
+
+/* Error toast — WoW death red */
+body[data-theme="warcraft"] .notification.error {
+  border-color: #c41e3a;
+  background: linear-gradient(135deg, #1a0408 0%, #0f030a 40%, #1a0408 100%);
+  box-shadow:
+    0 0 0 1px #0a0002,
+    inset 0 0 0 1px rgba(196, 30, 58, 0.18),
+    0 0 24px rgba(196, 30, 58, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.8);
+  color: #ff4466;
+}
+
+/* Override the icon background for the notification-icon area on error */
+body[data-theme="warcraft"] .notification.error .notification-icon svg {
+  filter: drop-shadow(0 0 6px rgba(196, 30, 58, 0.8));
+}
+
+/* Success toast — WoW uncommon green */
+body[data-theme="warcraft"] .notification.success {
+  border-color: #1eff00;
+  background: linear-gradient(135deg, #041a02 0%, #030f01 40%, #041a02 100%);
+  box-shadow:
+    0 0 0 1px #000a00,
+    inset 0 0 0 1px rgba(30, 255, 0, 0.1),
+    0 0 24px rgba(30, 255, 0, 0.2),
+    0 8px 32px rgba(0, 0, 0, 0.8);
+  color: #1eff00;
+}
+
+body[data-theme="warcraft"] .notification.success .notification-icon svg {
+  filter: drop-shadow(0 0 6px rgba(30, 255, 0, 0.7));
+}
+
+/* Warning toast — WoW legendary orange */
+body[data-theme="warcraft"] .notification.warning {
+  border-color: #ff8000;
+  background: linear-gradient(135deg, #1a0a00 0%, #0f0600 40%, #1a0a00 100%);
+  box-shadow:
+    0 0 0 1px #0a0400,
+    inset 0 0 0 1px rgba(255, 128, 0, 0.14),
+    0 0 24px rgba(255, 128, 0, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.8);
+  color: #ff8000;
+}
+
+body[data-theme="warcraft"] .notification.warning .notification-icon svg {
+  filter: drop-shadow(0 0 6px rgba(255, 128, 0, 0.7));
+}
+
+/* Info toast — WoW rare blue */
+body[data-theme="warcraft"] .notification.info {
+  border-color: #0070dd;
+  background: linear-gradient(135deg, #00091a 0%, #000612 40%, #00091a 100%);
+  box-shadow:
+    0 0 0 1px #000408,
+    inset 0 0 0 1px rgba(0, 112, 221, 0.15),
+    0 0 24px rgba(0, 112, 221, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.8);
+  color: #0070dd;
+}
+
+body[data-theme="warcraft"] .notification.info .notification-icon svg {
+  filter: drop-shadow(0 0 6px rgba(0, 112, 221, 0.7));
+}
+
+/* Notification message text inherits toast colour */
+body[data-theme="warcraft"] .notification-message {
+  color: inherit;
+  font-family: 'Cinzel', serif;
+}
+
+/* ============================================
+   WoW Authentic UI Enhancements — Batch 3
+   ============================================ */
+
+/* ── 1. Cast Bar — auto-refresh countdown shimmer ──────────────────── */
+
+/* WoW-style cast bar shimmer: a bright highlight sweeps left to right */
+@keyframes wow-cast-shimmer {
+  0%   { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+/* The countdown text row gets a thin cast-bar track beneath it */
+body[data-theme="warcraft"] .cyber-controls {
+  position: relative;
+}
+
+/* Inject a cast-bar strip at the very bottom of the controls panel */
+body[data-theme="warcraft"] .cyber-controls::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 209, 0, 0.08) 0%,
+    rgba(255, 209, 0, 0.55) 50%,
+    rgba(255, 209, 0, 0.08) 100%
+  );
+  background-size: 400px 3px;
+  animation: wow-cast-shimmer 2.5s linear infinite;
+  pointer-events: none;
+}
+
+/* ── 2. Service row nameplate hover ────────────────────────────────── */
+
+body[data-theme="warcraft"] .modern-table tbody tr.clickable:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 209, 0, 0.09) 0%,
+    rgba(255, 209, 0, 0.03) 100%
+  );
+  box-shadow:
+    0 0 12px rgba(255, 200, 50, 0.4),
+    inset 0 0 8px rgba(255, 200, 50, 0.1);
+  border-bottom-color: rgba(255, 209, 0, 0.4);
+  filter: brightness(1.06);
+}
+
+/* ── 3. Gem-style status dots ──────────────────────────────────────── */
+
+/* Base gem shape — shared across all states */
+body[data-theme="warcraft"] .status-dot {
+  border-radius: 50%;
+  position: relative;
+}
+
+/* Healthy — green gem: layered facet shadows + inner highlight */
+body[data-theme="warcraft"] .status-dot.healthy,
+body[data-theme="warcraft"] .status-dot.ok {
+  background: radial-gradient(circle at 35% 35%, #6aff50, #1eff00 55%, #0a8800);
+  box-shadow:
+    0 0 6px rgba(30, 255, 0, 0.7),
+    0 0 12px rgba(30, 255, 0, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.55),
+    inset 0 -1px 2px rgba(0, 80, 0, 0.6);
+  border: 1px solid rgba(30, 255, 0, 0.5);
+}
+
+/* Warning — amber gem */
+body[data-theme="warcraft"] .status-dot.warning,
+body[data-theme="warcraft"] .status-dot.warn {
+  background: radial-gradient(circle at 35% 35%, #ffcc55, #ff8000 55%, #8b4400);
+  box-shadow:
+    0 0 6px rgba(255, 128, 0, 0.7),
+    0 0 12px rgba(255, 128, 0, 0.4),
+    inset 0 1px 2px rgba(255, 255, 200, 0.5),
+    inset 0 -1px 2px rgba(100, 40, 0, 0.6);
+  border: 1px solid rgba(255, 128, 0, 0.5);
+}
+
+/* Bad / danger — red gem with deep shadow facets */
+body[data-theme="warcraft"] .status-dot.bad,
+body[data-theme="warcraft"] .status-dot.danger,
+body[data-theme="warcraft"] .status-dot.error {
+  background: radial-gradient(circle at 35% 35%, #ff5577, #c41e3a 55%, #5a0012);
+  box-shadow:
+    0 0 6px rgba(196, 30, 58, 0.8),
+    0 0 14px rgba(196, 30, 58, 0.5),
+    inset 0 1px 2px rgba(255, 180, 180, 0.45),
+    inset 0 -1px 3px rgba(80, 0, 10, 0.7);
+  border: 1px solid rgba(196, 30, 58, 0.6);
+}
+
+/* ── 4. Quest panel — filter / controls section ─────────────────────── */
+
+/* Style each control-section block inside .cyber-controls like a WoW
+   quest objectives box: warm parchment tint + gold top accent */
+body[data-theme="warcraft"] .cyber-controls .control-section {
+  background: rgba(60, 40, 15, 0.6);
+  border: 1px solid rgba(255, 209, 0, 0.2);
+  border-top: 2px solid rgba(255, 209, 0, 0.5);
+  border-radius: 2px;
+  padding: 10px 14px;
+  position: relative;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 209, 0, 0.08),
+    inset 0 0 24px rgba(60, 30, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Section label inside quest panel — gold, slightly spaced */
+body[data-theme="warcraft"] .cyber-controls .section-label {
+  color: #ffd100;
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 0.65em;
+  letter-spacing: 0.2em;
+  text-shadow:
+    0 0 8px rgba(255, 209, 0, 0.6),
+    1px 1px 2px rgba(0, 0, 0, 0.9);
+  margin-bottom: 6px;
+}
+
+/* Decorative left accent bar on the quest panel label */
+body[data-theme="warcraft"] .cyber-controls .control-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 209, 0, 0.8) 0%,
+    rgba(255, 209, 0, 0.3) 50%,
+    transparent 100%
+  );
+  border-radius: 0;
+  pointer-events: none;
+}

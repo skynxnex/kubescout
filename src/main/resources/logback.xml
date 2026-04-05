@@ -1,0 +1,18 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Suppress noisy framework internals regardless of app log level -->
+    <logger name="io.netty" level="WARN"/>
+    <logger name="io.ktor" level="WARN"/>
+    <logger name="io.kubernetes.client" level="WARN"/>
+    <logger name="okhttp3" level="WARN"/>
+    <logger name="org.apache.hc" level="WARN"/>
+
+    <root level="${LOG_LEVEL:-INFO}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

@@ -1,0 +1,42 @@
+name: kss
+
+services:
+  kss:
+    image: kubescout:latest
+    pull_policy: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ~/.kube:/root/.kube:ro
+      # AWS SSO/eks exec auth needs to write to ~/.aws/sso/cache
+      - ~/.aws:/root/.aws
+    env_file:
+      - .env
+  kss-dev:
+    build:
+      context: .
+      target: dev
+    working_dir: /app
+    profiles: ["dev"]
+    ulimits:
+      nofile:
+        soft: 10240
+        hard: 10240
+    volumes:
+      # Mount source code for live reload
+      - ./src:/app/src
+      - ./build.gradle.kts:/app/build.gradle.kts
+      # Mount credentials directly for live updates
+      - ~/.kube:/root/.kube:ro
+      - ~/.aws:/root/.aws
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        ulimit -n 10240
+        exec /usr/local/bin/watch-and-run.sh
+    ports:
+      - "8081:8080"
+    env_file:
+      - .env
+    environment:
+      LOG_LEVEL: "DEBUG"

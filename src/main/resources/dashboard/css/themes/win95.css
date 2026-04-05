@@ -1,0 +1,706 @@
+/**
+ * Windows 95 Theme
+ * Classic Win95 UI — teal desktop, silver panels, raised bevels,
+ * title bars, and all the charm of 640x480.
+ * Please ensure you have 4MB of RAM before proceeding.
+ */
+
+/* ============================================
+   Color Variables
+   ============================================ */
+:root {
+  /* Classic teal desktop, silver panels */
+  --cyber-bg-dark: #008080;
+  --cyber-bg-card: #c0c0c0;
+  --cyber-bg-input: #ffffff;
+
+  /* Classic system colours */
+  --neon-cyan:    #000080;
+  --neon-magenta: #800000;
+  --neon-orange:  #808000;
+  --neon-purple:  #800080;
+  --neon-green:   #008000;
+  --neon-yellow:  #ffff00;
+
+  /* Semantic colors */
+  --color-success: #008000;
+  --color-warning: #808000;
+  --color-danger:  #ff0000;
+  --color-info:    #000080;
+
+  /* System font — pure bitmap era */
+  --text-primary:   #000000;
+  --text-secondary: #000000;
+  --text-muted:     #808080;
+
+  /* Accent RGB */
+  --color-accent-rgb: 0, 0, 128;
+
+  /* No neon glows. This is 1995. */
+  --glow-cyan:    none;
+  --glow-magenta: none;
+  --glow-orange:  none;
+  --glow-yellow:  none;
+  --glow-green:   none;
+}
+
+/* ============================================
+   Base / Body — the teal desktop
+   ============================================ */
+body[data-theme="win95"] {
+  background-color: #008080;
+  color: #000000;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  font-size: 11px;
+}
+
+/* Hide all cyber background elements */
+body[data-theme="win95"] .grid-overlay,
+body[data-theme="win95"] .glow-orb {
+  display: none !important;
+}
+
+/* ============================================
+   Win95 Bevel Mixins (as repeated declarations)
+   Raised: lighter top-left, darker bottom-right
+   ============================================ */
+
+/* ============================================
+   Cards and Containers — silver windows
+   ============================================ */
+body[data-theme="win95"] .modern-table-container,
+body[data-theme="win95"] .cyber-controls,
+body[data-theme="win95"] .pod-card,
+body[data-theme="win95"] .section-panel {
+  background: #c0c0c0;
+  border: none;
+  border-radius: 0;
+  /* Raised bevel */
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff,
+    inset -2px -2px 0 #404040,
+    inset  2px  2px 0 #dfdfdf;
+}
+
+/* Window title bar on containers */
+body[data-theme="win95"] .modern-table-container {
+  position: relative;
+  padding-top: 22px;
+}
+
+body[data-theme="win95"] .modern-table-container::before {
+  content: "Services  -  KSS";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: linear-gradient(to right, #000080, #1084d0);
+  color: #ffffff;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  letter-spacing: 0;
+}
+
+/* Fake window control buttons in title bar top-right */
+body[data-theme="win95"] .modern-table-container::after {
+  content: "\2715";
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  width: 16px;
+  height: 14px;
+  background: #c0c0c0;
+  color: #000000;
+  font-size: 9px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff,
+    inset -2px -2px 0 #404040,
+    inset  2px  2px 0 #dfdfdf;
+  cursor: default;
+  user-select: none;
+  z-index: 1;
+  line-height: 14px;
+  text-align: center;
+  padding-bottom: 1px;
+}
+
+/* Controls panel also gets a title bar */
+body[data-theme="win95"] .cyber-controls {
+  position: relative;
+  padding-top: 22px;
+  margin-bottom: 8px;
+}
+
+body[data-theme="win95"] .cyber-controls::before {
+  content: "Filter Panel";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: linear-gradient(to right, #000080, #1084d0);
+  color: #ffffff;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+/* ============================================
+   Table — classic Win95 listview, two-line rows
+   Line 1: service name (full width)
+   Line 2: expand-cell buttons + stats inline
+   ============================================ */
+body[data-theme="win95"] .modern-table {
+  border-collapse: collapse;
+  font-size: 11px;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  width: 100%;
+}
+
+/* thead: collapsed bar — column headers no longer align to block rows */
+body[data-theme="win95"] .modern-table thead {
+  display: block;
+  background: #c0c0c0;
+  border-bottom: 2px solid #808080;
+}
+
+body[data-theme="win95"] .modern-table thead tr {
+  display: block;
+}
+
+body[data-theme="win95"] .modern-table thead th {
+  display: inline-block;
+  background: #c0c0c0;
+  color: #000000;
+  font-weight: bold;
+  text-transform: none;
+  font-size: 10px;
+  letter-spacing: 0;
+  text-shadow: none;
+  border-right: 1px solid #808080;
+  /* Column header raised bevel */
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff;
+  padding: 2px 6px;
+}
+
+/* tbody rows: display:block so serviceName (block) sits on its own line */
+body[data-theme="win95"] .modern-table tbody {
+  display: block;
+  width: 100%;
+}
+
+body[data-theme="win95"] .modern-table tbody tr {
+  display: block;
+  background: #ffffff;
+  border-bottom: 2px solid #808080;
+  padding: 0;
+}
+
+body[data-theme="win95"] .modern-table tbody tr:nth-child(even) {
+  background: #f8f8f8;
+}
+
+/* All td: inline-block by default (appear before/after the name block) */
+body[data-theme="win95"] .modern-table tbody td {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  color: #000000;
+  border-color: #d4d0c8;
+  text-shadow: none;
+  padding: 2px 8px;
+  font-size: 11px;
+  border-right: 1px solid #e0e0e0;
+}
+
+body[data-theme="win95"] .modern-table tbody td:last-child {
+  border-right: none;
+}
+
+/* Service name: full-width block — creates its own line between buttons and stats */
+body[data-theme="win95"] .modern-table tbody td[data-field="serviceName"] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 3px 8px;
+  font-weight: bold;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid #d4d0c8;
+  border-right: none;
+  color: #000080;
+  background: #eaeef8;
+  text-shadow: none;
+}
+
+body[data-theme="win95"] .expand-cell {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+}
+
+/* Subtle Win95 hover — very light blue tint, keep normal text/bevel colors */
+body[data-theme="win95"] .modern-table tbody tr:hover {
+  background: #d8e4f8 !important;
+}
+
+body[data-theme="win95"] .modern-table tbody tr:hover td[data-field="serviceName"] {
+  border-bottom-color: #b0c4e8;
+}
+
+/* ============================================
+   Title / Glitch — no glitch in Windows 95
+   ============================================ */
+body[data-theme="win95"] .glitch-text,
+body[data-theme="win95"] .glitch-text::before,
+body[data-theme="win95"] .glitch-text::after {
+  animation: none !important;
+  color: #000080 !important;
+  text-shadow: none !important;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  font-weight: bold;
+}
+
+body[data-theme="win95"] .glitch-text::before,
+body[data-theme="win95"] .glitch-text::after {
+  display: none;
+}
+
+/* ============================================
+   Section Labels
+   ============================================ */
+body[data-theme="win95"] .section-label,
+body[data-theme="win95"] .section-title,
+body[data-theme="win95"] h1, body[data-theme="win95"] h2,
+body[data-theme="win95"] h3, body[data-theme="win95"] h4 {
+  color: #000000;
+  font-weight: bold;
+  text-transform: none;
+  text-shadow: none;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+}
+
+/* ============================================
+   Buttons — classic Win95 raised bevels
+   ============================================ */
+body[data-theme="win95"] .btn,
+body[data-theme="win95"] button:not(.floating-refresh) {
+  background: #c0c0c0;
+  color: #000000;
+  border: none;
+  border-radius: 0;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  font-size: 11px;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 3px 10px;
+  min-width: 75px;
+  /* Raised bevel */
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff,
+    inset -2px -2px 0 #404040,
+    inset  2px  2px 0 #dfdfdf;
+  cursor: pointer;
+  text-shadow: none;
+}
+
+body[data-theme="win95"] .btn:hover,
+body[data-theme="win95"] button:not(.floating-refresh):hover {
+  background: #c0c0c0;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff,
+    inset -2px -2px 0 #404040,
+    inset  2px  2px 0 #dfdfdf;
+}
+
+/* Pressed state — sunken bevel */
+body[data-theme="win95"] .btn:active,
+body[data-theme="win95"] button:not(.floating-refresh):active {
+  box-shadow:
+    inset  1px  1px 0 #808080,
+    inset -1px -1px 0 #ffffff,
+    inset  2px  2px 0 #404040,
+    inset -2px -2px 0 #dfdfdf;
+  padding: 4px 9px 2px 11px;
+}
+
+body[data-theme="win95"] .btn-danger {
+  background: #c0c0c0;
+  color: #000000;
+}
+
+body[data-theme="win95"] .btn-secondary {
+  background: #c0c0c0;
+  color: #808080;
+}
+
+/* ============================================
+   Floating Refresh Button
+   ============================================ */
+body[data-theme="win95"] .floating-refresh {
+  background: #c0c0c0;
+  color: #000000;
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff,
+    inset -2px -2px 0 #404040,
+    inset  2px  2px 0 #dfdfdf;
+}
+
+body[data-theme="win95"] .floating-refresh:hover {
+  transform: none;
+  background: #d0d0d0;
+}
+
+body[data-theme="win95"] .floating-refresh:active {
+  box-shadow:
+    inset  1px  1px 0 #808080,
+    inset -1px -1px 0 #ffffff,
+    inset  2px  2px 0 #404040,
+    inset -2px -2px 0 #dfdfdf;
+}
+
+body[data-theme="win95"] .floating-refresh svg {
+  color: #000000;
+}
+
+/* ============================================
+   Inputs and Selects — sunken bevel
+   ============================================ */
+body[data-theme="win95"] input,
+body[data-theme="win95"] select,
+body[data-theme="win95"] textarea {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 0;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  font-size: 11px;
+  /* Sunken bevel */
+  box-shadow:
+    inset  1px  1px 0 #808080,
+    inset -1px -1px 0 #ffffff,
+    inset  2px  2px 0 #404040,
+    inset -2px -2px 0 #dfdfdf;
+  padding: 2px 4px;
+}
+
+body[data-theme="win95"] input:focus,
+body[data-theme="win95"] select:focus,
+body[data-theme="win95"] textarea:focus {
+  outline: 1px dotted #000000;
+  box-shadow:
+    inset  1px  1px 0 #808080,
+    inset -1px -1px 0 #ffffff,
+    inset  2px  2px 0 #404040,
+    inset -2px -2px 0 #dfdfdf;
+}
+
+/* ============================================
+   Status Badges — flat system labels
+   ============================================ */
+body[data-theme="win95"] .status-badge,
+body[data-theme="win95"] .namespace-badge,
+body[data-theme="win95"] .env-badge {
+  background: #c0c0c0;
+  color: #000000;
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff;
+  text-shadow: none;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 1px 4px;
+}
+
+/* ============================================
+   Status Dots — classic Win95 squares, not circles
+   ============================================ */
+body[data-theme="win95"] .status-dot,
+body[data-theme="win95"] [class*="status-dot"] {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  animation: none !important;
+  width: 10px !important;
+  height: 10px !important;
+}
+
+body[data-theme="win95"] .status-dot-green  { background: #008000; }
+body[data-theme="win95"] .status-dot-yellow { background: #808000; }
+body[data-theme="win95"] .status-dot-red    { background: #ff0000; }
+body[data-theme="win95"] .status-dot-blue   { background: #000080; }
+
+/* ============================================
+   Auto-Refresh Bar
+   ============================================ */
+body[data-theme="win95"] .auto-refresh-bar,
+body[data-theme="win95"] .refresh-progress,
+body[data-theme="win95"] [class*="refresh-bar"] {
+  background: #d4d0c8;
+  border-radius: 0;
+  box-shadow:
+    inset  1px  1px 0 #808080,
+    inset -1px -1px 0 #ffffff;
+}
+
+body[data-theme="win95"] .auto-refresh-bar-fill,
+body[data-theme="win95"] .refresh-progress-fill,
+body[data-theme="win95"] [class*="refresh-fill"] {
+  background: #000080;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* ============================================
+   Notifications — Windows message boxes
+   ============================================ */
+body[data-theme="win95"] .notification,
+body[data-theme="win95"] .toast {
+  background: #c0c0c0;
+  color: #000000;
+  border: none;
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff,
+    inset -2px -2px 0 #404040,
+    inset  2px  2px 0 #dfdfdf,
+    4px 4px 0 rgba(0,0,0,0.4);
+  animation: slideDown 0.1s ease-out;
+  font-size: 11px;
+}
+
+body[data-theme="win95"] .notification.removing,
+body[data-theme="win95"] .toast.removing {
+  animation: slideUp 0.1s ease-out forwards;
+}
+
+/* ============================================
+   Row status colors
+   ============================================ */
+body[data-theme="win95"] .row-bad {
+  background: #fff0f0 !important;
+}
+
+body[data-theme="win95"] .row-warn {
+  background: #fffff0 !important;
+}
+
+/* ============================================
+   Links
+   ============================================ */
+body[data-theme="win95"] a {
+  color: #000080;
+  text-decoration: underline;
+  text-shadow: none;
+}
+
+body[data-theme="win95"] a:hover {
+  color: #0000ff;
+}
+
+/* ============================================
+   Code / Pre / Log viewer
+   ============================================ */
+body[data-theme="win95"] code,
+body[data-theme="win95"] pre,
+body[data-theme="win95"] .log-line,
+body[data-theme="win95"] .log-viewer {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 0;
+  font-family: 'Courier New', 'Fixedsys', monospace;
+  font-size: 11px;
+  box-shadow:
+    inset  1px  1px 0 #808080,
+    inset -1px -1px 0 #ffffff,
+    inset  2px  2px 0 #404040,
+    inset -2px -2px 0 #dfdfdf;
+}
+
+/* ============================================
+   Modal — Win95 dialog window
+   ============================================ */
+body[data-theme="win95"] .modal-overlay,
+body[data-theme="win95"] .modal-backdrop {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: none;
+}
+
+body[data-theme="win95"] .modal-content {
+  background: #c0c0c0;
+  border: none;
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff,
+    inset -2px -2px 0 #404040,
+    inset  2px  2px 0 #dfdfdf,
+    8px 8px 0 rgba(0, 0, 0, 0.5);
+  color: #000000;
+  position: relative;
+  padding-top: 22px;
+}
+
+body[data-theme="win95"] .modal-content::before {
+  content: "Dialog";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: linear-gradient(to right, #000080, #1084d0);
+  color: #ffffff;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+body[data-theme="win95"] .modal-header {
+  background: transparent;
+  border-bottom: 1px solid #808080;
+  color: #000000;
+  border-radius: 0;
+  padding: 4px 8px;
+}
+
+body[data-theme="win95"] .modal-header h2,
+body[data-theme="win95"] .modal-header h3,
+body[data-theme="win95"] .modal-header * {
+  color: #000000;
+  text-shadow: none;
+  font-family: 'MS Sans Serif', 'Tahoma', 'Arial', sans-serif;
+}
+
+/* ============================================
+   Pod Cards
+   ============================================ */
+body[data-theme="win95"] .pod-card {
+  background: #c0c0c0;
+  border: none;
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff,
+    inset -2px -2px 0 #404040,
+    inset  2px  2px 0 #dfdfdf;
+}
+
+body[data-theme="win95"] .pod-card-header {
+  background: #d4d0c8;
+  border-bottom: 1px solid #808080;
+  color: #000000;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 4px 6px;
+}
+
+body[data-theme="win95"] .pod-card-name {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  word-break: normal;
+}
+
+body[data-theme="win95"] .pod-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ============================================
+   Screensaver canvas
+   ============================================ */
+#win95ScreensaverCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ============================================
+   Scrollbar — classic Win95 grey
+   ============================================ */
+body[data-theme="win95"] ::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+body[data-theme="win95"] ::-webkit-scrollbar-track {
+  background: #c0c0c0;
+  box-shadow:
+    inset  1px  1px 0 #808080,
+    inset -1px -1px 0 #ffffff;
+}
+
+body[data-theme="win95"] ::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 0;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff;
+}
+
+body[data-theme="win95"] ::-webkit-scrollbar-button {
+  background: #c0c0c0;
+  box-shadow:
+    inset -1px -1px 0 #808080,
+    inset  1px  1px 0 #ffffff;
+}
+
+/* ============================================
+   Kill all neon/cyber effects
+   ============================================ */
+body[data-theme="win95"] [class*="neon"],
+body[data-theme="win95"] [class*="glow"],
+body[data-theme="win95"] [class*="cyber-text"] {
+  text-shadow: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+body[data-theme="win95"] * {
+  text-shadow: none;
+}
+
+body[data-theme="win95"] .glitch-text {
+  animation: none !important;
+}

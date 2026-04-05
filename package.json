@@ -1,0 +1,18 @@
+{
+  "name": "kss",
+  "private": true,
+  "scripts": {
+    "build": "docker buildx build --platform linux/amd64,linux/arm64 -t kubescout:latest --load .",
+    "up": "docker compose up",
+    "up-background": "docker compose up -d",
+    "up-dev": "docker compose --profile dev up --build --force-recreate --remove-orphans kss-dev",
+    "up-dev-background": "docker compose --profile dev up -d --build --force-recreate --remove-orphans kss-dev",
+    "reload-dev": "docker compose --profile dev restart kss-dev",
+    "logs-dev": "docker compose --profile dev logs -f --tail=200 kss-dev",
+    "stop": "docker compose --profile dev down --remove-orphans",
+    "down": "docker compose --profile dev down --remove-orphans",
+    "push": "docker buildx build --platform linux/amd64,linux/arm64 -t kubescout:latest --push .",
+    "test:frontend": "node src/main/resources/dashboard/js/utils/formatting.test.js"
+  },
+  "type": "module"
+}

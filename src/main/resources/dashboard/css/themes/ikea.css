@@ -1,0 +1,554 @@
+/**
+ * IKEA Flat-Pack Manual Theme
+ * The dashboard as an IKEA assembly booklet.
+ * Crisp white, Swedish blue and yellow, Scandinavian flat design.
+ * Everything numbered like assembly steps. No glow. No nonsense.
+ * Just clean, functional design that requires exactly one allen key.
+ */
+
+/* ============================================
+   Color Variables
+   ============================================ */
+:root {
+  /* Clean Scandinavian whites */
+  --cyber-bg-dark: #f5f5f0;
+  --cyber-bg-card: rgba(255, 255, 255, 0.97);
+  --cyber-bg-input: #ffffff;
+
+  /* IKEA Blue + Yellow system */
+  --neon-cyan: #0051ba;
+  --neon-magenta: #e05a00;
+  --neon-orange: #e05a00;
+  --neon-purple: #0051ba;
+  --neon-green: #0a8a0a;
+  --neon-yellow: #ffda1a;
+
+  /* Semantic Colors */
+  --color-success: #0a8a0a;
+  --color-warning: #e05a00;
+  --color-danger: #cc0008;
+  --color-info: #0051ba;
+
+  /* Near-black text on white — maximum readability */
+  --text-primary: #111111;
+  --text-secondary: #333333;
+  --text-muted: #767676;
+
+  /* Accent RGB */
+  --color-accent-rgb: 0, 81, 186;
+
+  /* No glow. IKEA manuals do not glow. */
+  --glow-cyan:    none;
+  --glow-magenta: none;
+  --glow-orange:  none;
+  --glow-yellow:  none;
+  --glow-green:   none;
+}
+
+/* ============================================
+   Base / Body
+   ============================================ */
+body[data-theme="ikea"] {
+  background-color: #f5f5f0;
+  background-image:
+    linear-gradient(rgba(0, 81, 186, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 81, 186, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: #111111;
+  font-family: 'Verdana', 'Arial', sans-serif;
+}
+
+/* Hide all the cyber background decoration — we're in a catalogue now */
+body[data-theme="ikea"] .grid-overlay,
+body[data-theme="ikea"] .glow-orb {
+  display: none !important;
+}
+
+/* ============================================
+   Assembly Step Counter
+   Numbers each service row like IKEA step instructions
+   ============================================ */
+body[data-theme="ikea"] .modern-table tbody {
+  counter-reset: step-counter;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr {
+  counter-increment: step-counter;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr td:first-child::before {
+  content: counter(step-counter, decimal-leading-zero);
+  display: inline-block;
+  margin-right: 8px;
+  color: #0051ba;
+  font-weight: bold;
+  font-size: 0.72em;
+  font-family: 'Verdana', 'Arial', sans-serif;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+
+/* ============================================
+   Cards and Containers
+   ============================================ */
+body[data-theme="ikea"] .modern-table-container,
+body[data-theme="ikea"] .cyber-controls,
+body[data-theme="ikea"] .pod-card,
+body[data-theme="ikea"] .modal-content,
+body[data-theme="ikea"] .section-panel {
+  background: #ffffff;
+  border: 2px solid #0051ba;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+
+
+/* ============================================
+   Table
+   ============================================ */
+body[data-theme="ikea"] .modern-table thead {
+  background: #0051ba;
+  color: #ffffff;
+}
+
+body[data-theme="ikea"] .modern-table thead th {
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.72em;
+  letter-spacing: 0.1em;
+  border-bottom: none;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr {
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr:hover {
+  background: #e8edf8;
+}
+
+body[data-theme="ikea"] .modern-table tbody td {
+  color: #111111;
+  border-color: #e0e0e0;
+  text-shadow: none;
+}
+
+/* ============================================
+   Title / Glitch text — NO glitch in IKEA land
+   ============================================ */
+body[data-theme="ikea"] .glitch-text,
+body[data-theme="ikea"] .glitch-text::before,
+body[data-theme="ikea"] .glitch-text::after {
+  animation: none !important;
+  color: #0051ba !important;
+  text-shadow: none !important;
+  font-family: 'Verdana', 'Arial', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+body[data-theme="ikea"] .glitch-text::before,
+body[data-theme="ikea"] .glitch-text::after {
+  display: none;
+}
+
+/* ============================================
+   Section Labels
+   ============================================ */
+body[data-theme="ikea"] .section-label,
+body[data-theme="ikea"] .section-title,
+body[data-theme="ikea"] h1, body[data-theme="ikea"] h2,
+body[data-theme="ikea"] h3, body[data-theme="ikea"] h4 {
+  color: #0051ba;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-shadow: none;
+}
+
+/* ============================================
+   Buttons — flat Scandinavian design
+   ============================================ */
+body[data-theme="ikea"] .btn,
+body[data-theme="ikea"] button:not(.floating-refresh) {
+  background: #0051ba;
+  color: #ffffff;
+  border: none;
+  border-radius: 2px;
+  font-family: 'Verdana', 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+body[data-theme="ikea"] .btn:hover,
+body[data-theme="ikea"] button:not(.floating-refresh):hover {
+  background: #003d8f;
+  box-shadow: none;
+}
+
+body[data-theme="ikea"] .btn-secondary {
+  background: #767676;
+  color: #ffffff;
+}
+
+body[data-theme="ikea"] .btn-secondary:hover {
+  background: #555555;
+}
+
+body[data-theme="ikea"] .btn-danger {
+  background: #cc0008;
+  color: #ffffff;
+}
+
+body[data-theme="ikea"] .btn-danger:hover {
+  background: #990006;
+}
+
+body[data-theme="ikea"] .btn-warning {
+  background: #e05a00;
+  color: #ffffff;
+}
+
+/* ============================================
+   Floating Refresh Button
+   ============================================ */
+body[data-theme="ikea"] .floating-refresh {
+  background: #ffda1a;
+  color: #111111;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body[data-theme="ikea"] .floating-refresh:hover {
+  background: #f0c800;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transform: scale(1.05);
+}
+
+body[data-theme="ikea"] .floating-refresh svg {
+  color: #111111;
+}
+
+/* ============================================
+   Inputs and Selects
+   ============================================ */
+body[data-theme="ikea"] input,
+body[data-theme="ikea"] select,
+body[data-theme="ikea"] textarea {
+  background: #ffffff;
+  color: #111111;
+  border: 1px solid #767676;
+  border-radius: 2px;
+  box-shadow: none;
+  font-family: 'Verdana', 'Arial', sans-serif;
+  transition: border-color 0.15s ease;
+}
+
+body[data-theme="ikea"] input:focus,
+body[data-theme="ikea"] select:focus,
+body[data-theme="ikea"] textarea:focus {
+  border: 2px solid #0051ba;
+  outline: none;
+  box-shadow: none;
+}
+
+body[data-theme="ikea"] input::placeholder {
+  color: #767676;
+}
+
+/* ============================================
+   Status Badges and Namespace Badge
+   ============================================ */
+body[data-theme="ikea"] .status-badge,
+body[data-theme="ikea"] .namespace-badge,
+body[data-theme="ikea"] .env-badge {
+  background: #0051ba;
+  color: #ffffff;
+  border-radius: 2px;
+  box-shadow: none;
+  text-shadow: none;
+  font-weight: bold;
+}
+
+/* ============================================
+   Status Dots — clean, no glow
+   ============================================ */
+body[data-theme="ikea"] .status-dot,
+body[data-theme="ikea"] [class*="status-dot"] {
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+body[data-theme="ikea"] .status-dot-green  { background: #0a8a0a; }
+body[data-theme="ikea"] .status-dot-yellow { background: #e05a00; }
+body[data-theme="ikea"] .status-dot-red    { background: #cc0008; }
+body[data-theme="ikea"] .status-dot-blue   { background: #0051ba; }
+
+/* ============================================
+   Auto-Refresh Bar
+   ============================================ */
+body[data-theme="ikea"] .auto-refresh-bar,
+body[data-theme="ikea"] .refresh-progress,
+body[data-theme="ikea"] [class*="refresh-bar"] {
+  background: #e0e8ff;
+  border-radius: 0;
+}
+
+body[data-theme="ikea"] .auto-refresh-bar-fill,
+body[data-theme="ikea"] .refresh-progress-fill,
+body[data-theme="ikea"] [class*="refresh-fill"] {
+  background: #0051ba;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* ============================================
+   Notifications / Toasts — IKEA warning style
+   ============================================ */
+body[data-theme="ikea"] .notification,
+body[data-theme="ikea"] .toast {
+  background: #ffffff;
+  color: #111111;
+  border-left: 4px solid #ffda1a;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: slideDown 0.3s ease-out;
+}
+
+body[data-theme="ikea"] .notification.removing,
+body[data-theme="ikea"] .toast.removing {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+body[data-theme="ikea"] .notification-error,
+body[data-theme="ikea"] .toast-error {
+  border-left-color: #cc0008;
+}
+
+body[data-theme="ikea"] .notification-success,
+body[data-theme="ikea"] .toast-success {
+  border-left-color: #0a8a0a;
+}
+
+body[data-theme="ikea"] .notification-info,
+body[data-theme="ikea"] .toast-info {
+  border-left-color: #0051ba;
+}
+
+/* Warning prefix triangle */
+body[data-theme="ikea"] .notification-warning::before,
+body[data-theme="ikea"] .toast-warning::before {
+  content: "\26A0\0020";
+  color: #e05a00;
+  font-size: 1.1em;
+}
+
+/* ============================================
+   Links
+   ============================================ */
+body[data-theme="ikea"] a {
+  color: #0051ba;
+  text-decoration: underline;
+  text-shadow: none;
+}
+
+body[data-theme="ikea"] a:hover {
+  color: #003d8f;
+}
+
+/* ============================================
+   Code / Pre elements
+   ============================================ */
+body[data-theme="ikea"] code,
+body[data-theme="ikea"] pre,
+body[data-theme="ikea"] .log-line,
+body[data-theme="ikea"] .log-viewer {
+  background: #f0f0ec;
+  color: #111111;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  font-family: 'Courier New', 'Courier', monospace;
+}
+
+/* ============================================
+   Modal Overlay
+   ============================================ */
+body[data-theme="ikea"] .modal-overlay,
+body[data-theme="ikea"] .modal-backdrop {
+  background: rgba(0, 81, 186, 0.08);
+  backdrop-filter: none;
+}
+
+body[data-theme="ikea"] .modal-content {
+  background: #ffffff;
+  border: 2px solid #0051ba;
+  border-radius: 2px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  color: #111111;
+}
+
+body[data-theme="ikea"] .modal-header {
+  background: #0051ba;
+  color: #ffffff;
+  border-radius: 0;
+}
+
+body[data-theme="ikea"] .modal-header h2,
+body[data-theme="ikea"] .modal-header h3,
+body[data-theme="ikea"] .modal-header * {
+  color: #ffffff;
+  text-shadow: none;
+}
+
+/* ============================================
+   Pod Cards (expanded view)
+   ============================================ */
+body[data-theme="ikea"] .pod-card {
+  background: #ffffff;
+  border: 2px solid #0051ba;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+body[data-theme="ikea"] .pod-card-header {
+  background: #e8edf8;
+  border-bottom: 1px solid #0051ba;
+  color: #111111;
+  font-weight: bold;
+}
+
+/* ============================================
+   Filter Chips — active state
+   ============================================ */
+body[data-theme="ikea"] .filter-chip:hover {
+  border-color: #0051ba;
+  background: rgba(0, 81, 186, 0.08);
+}
+
+body[data-theme="ikea"] .filter-chip.active {
+  background: #0051ba;
+  border-color: #0051ba;
+  color: #ffffff;
+  box-shadow: none;
+  font-weight: bold;
+}
+
+body[data-theme="ikea"] .filter-chip.active svg,
+body[data-theme="ikea"] .filter-chip.active span {
+  color: #ffffff;
+}
+
+/* ============================================
+   Row status colors — flat, no glow.
+   Full selector path to beat tbody tr specificity (0,2,3).
+   Also override even/odd row alternation.
+   ============================================ */
+body[data-theme="ikea"] .modern-table tbody tr.row-bad,
+body[data-theme="ikea"] .modern-table tbody tr.row-bad:nth-child(even),
+body[data-theme="ikea"] .modern-table tbody tr.row-bad:nth-child(odd) {
+  background: #ffd6d6;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr.row-bad td,
+body[data-theme="ikea"] .modern-table tbody tr.row-bad:nth-child(even) td,
+body[data-theme="ikea"] .modern-table tbody tr.row-bad:nth-child(odd) td {
+  background: #ffd6d6 !important;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr.row-bad td:first-child {
+  border-left: 4px solid #cc0008 !important;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr.row-warn,
+body[data-theme="ikea"] .modern-table tbody tr.row-warn:nth-child(even),
+body[data-theme="ikea"] .modern-table tbody tr.row-warn:nth-child(odd) {
+  background: #ffe8b0;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr.row-warn td,
+body[data-theme="ikea"] .modern-table tbody tr.row-warn:nth-child(even) td,
+body[data-theme="ikea"] .modern-table tbody tr.row-warn:nth-child(odd) td {
+  background: #ffe8b0 !important;
+}
+
+body[data-theme="ikea"] .modern-table tbody tr.row-warn td:first-child {
+  border-left: 4px solid #e05a00 !important;
+}
+
+/* ============================================
+   Scrollbar — clean and minimal
+   ============================================ */
+body[data-theme="ikea"] ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+body[data-theme="ikea"] ::-webkit-scrollbar-track {
+  background: #f0f0ec;
+}
+
+body[data-theme="ikea"] ::-webkit-scrollbar-thumb {
+  background: #0051ba;
+  border-radius: 0;
+}
+
+body[data-theme="ikea"] ::-webkit-scrollbar-thumb:hover {
+  background: #003d8f;
+}
+
+/* ============================================
+   Remove all animation/glow from cyber elements
+   ============================================ */
+body[data-theme="ikea"] [class*="neon"],
+body[data-theme="ikea"] [class*="glow"],
+body[data-theme="ikea"] [class*="cyber-text"] {
+  text-shadow: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+body[data-theme="ikea"] * {
+  text-shadow: none;
+}
+
+/* Suppress the matrix/cyber glitch animations globally for this theme */
+body[data-theme="ikea"] .glitch-text {
+  animation: none !important;
+}
+
+/* IKEA instruction manual background */
+body[data-theme="ikea"]::before {
+  content: '';
+  position: fixed;
+  inset: -20%;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNDQwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjQ0MCI+CiAgPGRlZnM+CiAgICA8bWFya2VyIGlkPSJhIiBtYXJrZXJXaWR0aD0iOCIgbWFya2VySGVpZ2h0PSI2IiByZWZYPSI3IiByZWZZPSIzIiBvcmllbnQ9ImF1dG8iPgogICAgICA8cG9seWdvbiBwb2ludHM9IjAgMCw4IDMsMCA2IiBmaWxsPSIjMjIyIi8+CiAgICA8L21hcmtlcj4KICAgIDxtYXJrZXIgaWQ9ImIiIG1hcmtlcldpZHRoPSI4IiBtYXJrZXJIZWlnaHQ9IjYiIHJlZlg9IjciIHJlZlk9IjMiIG9yaWVudD0iYXV0byI+CiAgICAgIDxwb2x5Z29uIHBvaW50cz0iMCAwLDggMywwIDYiIGZpbGw9IiMwMDUxYmEiLz4KICAgIDwvbWFya2VyPgogIDwvZGVmcz4KCiAgPCEtLSBQYWdlIC0tPgogIDxyZWN0IHdpZHRoPSIzMjAiIGhlaWdodD0iNDQwIiBmaWxsPSIjZmZmZmZmIiByeD0iMyIvPgoKICA8IS0tIElLRUEgbG9nbyAtLT4KICA8cmVjdCB4PSIxMiIgeT0iMTIiIHdpZHRoPSI1OCIgaGVpZ2h0PSIyMiIgZmlsbD0iIzAwNTFiYSIgcng9IjIiLz4KICA8dGV4dCB4PSI0MSIgeT0iMjciIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjayxBcmlhbCIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zaXplPSIxMyIgZmlsbD0iI2ZmZGExYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SUtFQTwvdGV4dD4KCiAgPCEtLSBQYWdlIHRpdGxlIC0tPgogIDx0ZXh0IHg9IjkwIiB5PSIyNiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjkiIGZpbGw9IiM3Njc2NzYiIGxldHRlci1zcGFjaW5nPSIxIj5LQUxMQVggLyBBU1NFTUJMWTwvdGV4dD4KCiAgPCEtLSBEaXZpZGVyIC0tPgogIDxsaW5lIHgxPSIxMiIgeTE9IjQwIiB4Mj0iMzA4IiB5Mj0iNDAiIHN0cm9rZT0iI2UwZTBlMCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gU3RlcCAxIC0tPgogIDxjaXJjbGUgY3g9IjI4IiBjeT0iNjgiIHI9IjExIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDUxYmEiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjI4IiB5PSI3MyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iIzAwNTFiYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MTwvdGV4dD4KICA8cmVjdCB4PSI1NSIgeT0iNTIiIHdpZHRoPSIzOCIgaGVpZ2h0PSIzMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIgcng9IjIiLz4KICA8dGV4dCB4PSI3NCIgeT0iNzIiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI5IiBmaWxsPSIjNTU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BPC90ZXh0PgogIDxsaW5lIHgxPSIxMDAiIHkxPSI2OCIgeDI9IjExOCIgeTI9IjY4IiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMS41IiBtYXJrZXItZW5kPSJ1cmwoI2EpIi8+CiAgPHJlY3QgeD0iMTI1IiB5PSI1MiIgd2lkdGg9IjU1IiBoZWlnaHQ9IjMyIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDUxYmEiIHN0cm9rZS13aWR0aD0iMS41IiByeD0iMiIvPgogIDxsaW5lIHgxPSIxMjUiIHkxPSI2OCIgeDI9IjE4MCIgeTI9IjY4IiBzdHJva2U9IiMwMDUxYmEiIHN0cm9rZS13aWR0aD0iMC41IiBzdHJva2UtZGFzaGFycmF5PSI0LDMiLz4KICA8dGV4dCB4PSIxNTIiIHk9IjcyIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iIzAwNTFiYSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QSArIEI8L3RleHQ+CiAgPHJlY3QgeD0iMjAwIiB5PSI1NSIgd2lkdGg9IjIyIiBoZWlnaHQ9IjIyIiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41IiByeD0iMiIvPgogIDxsaW5lIHgxPSIyMDAiIHkxPSI2NiIgeDI9IjIyMiIgeTI9IjY2IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMC44Ii8+CiAgPHRleHQgeD0iMjI2IiB5PSI2MyIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjgiIGZpbGw9IiM1NTUiPng0PC90ZXh0PgoKICA8bGluZSB4MT0iMTIiIHkxPSIxMDAiIHgyPSIzMDgiIHkyPSIxMDAiIHN0cm9rZT0iI2UwZTBlMCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gU3RlcCAyIC0tPgogIDxjaXJjbGUgY3g9IjI4IiBjeT0iMTI4IiByPSIxMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDA1MWJhIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIyOCIgeT0iMTMzIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMDA1MWJhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4yPC90ZXh0PgogIDwhLS0gU3RpY2sgZmlndXJlIC0tPgogIDxjaXJjbGUgY3g9IjcyIiBjeT0iMTE1IiByPSI3IiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGxpbmUgeDE9IjcyIiB5MT0iMTIyIiB4Mj0iNzIiIHkyPSIxNDIiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8bGluZSB4MT0iNzIiIHkxPSIxMjkiIHgyPSI2MCIgeTI9IjEzNyIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDxsaW5lIHgxPSI3MiIgeTE9IjEyOSIgeDI9Ijg1IiB5Mj0iMTM2IiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGxpbmUgeDE9IjcyIiB5MT0iMTQyIiB4Mj0iNjMiIHkyPSIxNTQiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8bGluZSB4MT0iNzIiIHkxPSIxNDIiIHgyPSI4MCIgeTI9IjE1NCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDwhLS0gUGFuZWwgYmVpbmcgaGVsZCAtLT4KICA8cmVjdCB4PSI5MCIgeT0iMTEyIiB3aWR0aD0iNjAiIGhlaWdodD0iNDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiIHJ4PSIxIi8+CiAgPGxpbmUgeDE9IjkwIiB5MT0iMTMzIiB4Mj0iMTUwIiB5Mj0iMTMzIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMC44IiBzdHJva2UtZGFzaGFycmF5PSI0LDMiLz4KICA8IS0tIEFycm93IC0tPgogIDxsaW5lIHgxPSIxNTgiIHkxPSIxMzMiIHgyPSIxNzIiIHkyPSIxMzMiIHN0cm9rZT0iIzAwNTFiYSIgc3Ryb2tlLXdpZHRoPSIxLjUiIG1hcmtlci1lbmQ9InVybCgjYikiLz4KICA8IS0tIEFzc2VtYmxlZCAtLT4KICA8cmVjdCB4PSIxNzgiIHk9IjExMCIgd2lkdGg9IjcwIiBoZWlnaHQ9IjQ2IiBmaWxsPSIjZjhmOGY4IiBzdHJva2U9IiMwMDUxYmEiIHN0cm9rZS13aWR0aD0iMS41IiByeD0iMSIvPgogIDxsaW5lIHgxPSIyMTMiIHkxPSIxMTAiIHgyPSIyMTMiIHkyPSIxNTYiIHN0cm9rZT0iIzAwNTFiYSIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1kYXNoYXJyYXk9IjMsMiIvPgogIDxsaW5lIHgxPSIxNzgiIHkxPSIxMzMiIHgyPSIyNDgiIHkyPSIxMzMiIHN0cm9rZT0iIzAwNTFiYSIgc3Ryb2tlLXdpZHRoPSIwLjgiIHN0cm9rZS1kYXNoYXJyYXk9IjMsMiIvPgoKICA8bGluZSB4MT0iMTIiIHkxPSIxNzIiIHgyPSIzMDgiIHkyPSIxNzIiIHN0cm9rZT0iI2UwZTBlMCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gU3RlcCAzIC0tPgogIDxjaXJjbGUgY3g9IjI4IiBjeT0iMjAwIiByPSIxMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDA1MWJhIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIyOCIgeT0iMjA1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMDA1MWJhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4zPC90ZXh0PgogIDwhLS0gU2NyZXdzIC0tPgogIDxjaXJjbGUgY3g9IjYyIiBjeT0iMjAwIiByPSI5IiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgPGxpbmUgeDE9IjUzIiB5MT0iMjAwIiB4Mj0iNzEiIHkyPSIyMDAiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICA8bGluZSB4MT0iNjIiIHkxPSIxOTEiIHgyPSI2MiIgeTI9IjIwOSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDx0ZXh0IHg9Ijc2IiB5PSIyMDQiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI5IiBmaWxsPSIjNTU1Ij54IDg8L3RleHQ+CiAgPCEtLSBEb3dlbCAtLT4KICA8cmVjdCB4PSIxMDUiIHk9IjE5NCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjEyIiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41IiByeD0iNSIvPgogIDxsaW5lIHgxPSIxMDkiIHkxPSIxOTciIHgyPSIxMDkiIHkyPSIyMDMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPGxpbmUgeDE9IjExMyIgeTE9IjE5NyIgeDI9IjExMyIgeTI9IjIwMyIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iMTE3IiB5MT0iMTk3IiB4Mj0iMTE3IiB5Mj0iMjAzIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIvPgogIDxsaW5lIHgxPSIxMjEiIHkxPSIxOTciIHgyPSIxMjEiIHkyPSIyMDMiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPHRleHQgeD0iMTMzIiB5PSIyMDQiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI5IiBmaWxsPSIjNTU1Ij54IDE2PC90ZXh0PgogIDwhLS0gV2FybmluZyAtLT4KICA8cG9seWdvbiBwb2ludHM9IjIyOCwxODggMjQ4LDIxOCAyMDgsMjE4IiBmaWxsPSJub25lIiBzdHJva2U9IiNlMDVhMDAiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjIyOCIgeT0iMjEyIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZTA1YTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4hPC90ZXh0PgogIDx0ZXh0IHg9IjIyOCIgeT0iMjI4IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iNyIgZmlsbD0iI2UwNWEwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MiBQRVJTT05TPC90ZXh0PgoKICA8bGluZSB4MT0iMTIiIHkxPSIyNDIiIHgyPSIzMDgiIHkyPSIyNDIiIHN0cm9rZT0iI2UwZTBlMCIgc3Ryb2tlLXdpZHRoPSIxIi8+CgogIDwhLS0gU3RlcCA0IC0tPgogIDxjaXJjbGUgY3g9IjI4IiBjeT0iMjcyIiByPSIxMSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDA1MWJhIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIyOCIgeT0iMjc3IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjMDA1MWJhIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj40PC90ZXh0PgogIDwhLS0gQm9va2Nhc2UgZmluYWwgLS0+CiAgPHJlY3QgeD0iNTUiIHk9IjI1MiIgd2lkdGg9IjgwIiBoZWlnaHQ9IjcwIiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMS41IiByeD0iMiIvPgogIDxsaW5lIHgxPSI1NSIgeTE9IjI3NSIgeDI9IjEzNSIgeTI9IjI3NSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEiLz4KICA8bGluZSB4MT0iNTUiIHkxPSIyOTgiIHgyPSIxMzUiIHkyPSIyOTgiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPHJlY3QgeD0iNjAiIHk9IjMwOCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjEyIiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIgcng9IjEiLz4KICA8cmVjdCB4PSIxMDAiIHk9IjMwOCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjEyIiBmaWxsPSJub25lIiBzdHJva2U9IiMzMzMiIHN0cm9rZS13aWR0aD0iMSIgcng9IjEiLz4KICA8IS0tIENoZWNrbWFyayBjaXJjbGUgLS0+CiAgPGNpcmNsZSBjeD0iMjEwIiBjeT0iMjg3IiByPSIyMiIgZmlsbD0iIzAwNTFiYSIvPgogIDxwb2x5bGluZSBwb2ludHM9IjE5OCwyODcgMjA3LDI5OCAyMjYsMjc0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgoKICA8IS0tIERvdHRlZCBhcnJvdyB0byBmaW5hbCAtLT4KICA8bGluZSB4MT0iMTQwIiB5MT0iMjg3IiB4Mj0iMTg1IiB5Mj0iMjg3IiBzdHJva2U9IiMwMDUxYmEiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtZGFzaGFycmF5PSI0LDMiIG1hcmtlci1lbmQ9InVybCgjYikiLz4KCiAgPCEtLSBCb3R0b20gcGFnZSBudW1iZXIgLS0+CiAgPGxpbmUgeDE9IjEyIiB5MT0iNDAwIiB4Mj0iMzA4IiB5Mj0iNDAwIiBzdHJva2U9IiNlMGUwZTAiIHN0cm9rZS13aWR0aD0iMSIvPgogIDx0ZXh0IHg9IjE2MCIgeT0iNDIwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiNhYWEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuKAlCA0IOKAlDwvdGV4dD4KPC9zdmc+");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  transform: rotate(-7deg) scale(1.3);
+  filter: blur(2.5px);
+  opacity: 0.15;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Keep all content above the background */
+body[data-theme="ikea"] > * {
+  position: relative;
+  z-index: 1;
+}

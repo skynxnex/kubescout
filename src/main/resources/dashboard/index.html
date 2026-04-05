@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KSS — Kubernetes Service Summary</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2306b6d4%22/%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23ec4899%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%23050505%22/%3E%3Cpath%20d%3D%22M18%2042V22h8v20h-8zm12%200V14h8v28h-8zm12%200V30h8v12h-8z%22%20fill%3D%22url(%23g)%22/%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2218%22%20r%3D%226%22%20fill%3D%22%23f97316%22/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/dashboard/css/shared/base.css?{{CSS_HASH}}" />
+  <link rel="stylesheet" href="/dashboard/css/themes/cyberpunk.css?{{CSS_HASH}}" />
+
+  <!-- Vue 3 CDN (loaded before xterm and main module) -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- xterm.js Terminal -->
+  <link rel="stylesheet" href="https://unpkg.com/xterm@5.3.0/css/xterm.css" />
+</head>
+<body class="no-transition" data-theme="dark">
+  <!-- Animated Background -->
+  <div class="cyber-bg">
+    <div class="grid-overlay"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+  </div>
+
+  <!-- Theme Badge (upper left corner) -->
+  <div class="theme-badge" id="themeBadge"></div>
+
+  <!-- Floating Refresh Button -->
+  <button type="button" class="floating-refresh" id="floatingRefresh" title="Refresh">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 4 23 10 17 10"/>
+      <polyline points="1 20 1 14 7 14"/>
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+    </svg>
+  </button>
+
+  <!-- Notification Container -->
+  <div class="notification-container" id="notificationContainer"></div>
+
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="header-content">
+        <h1 class="glitch-text" data-text="SERVICE DASHBOARD">SERVICE DASHBOARD</h1>
+        <div class="header-subtitle">
+          <span class="pulse-dot"></span>
+          <span>LIVE MONITORING • LOCAL MODE</span>
+        </div>
+      </div>
+      <div class="meta-info">
+        Fetches data from <code>/services-local</code> via kubeconfig/AWS credentials.
+      </div>
+      <div class="meta-info">
+        Extra: red marking for <code>OOMKilled</code> and <code>Error</code>. Yellow marking for <code>Completed</code>. Blue marking when <code>podCount == 1</code>.
+      </div>
+      <div style="margin-top: 12px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+        <a href="/problematic-pods" class="cyber-button" style="text-decoration: none; display: inline-flex; align-items: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Problematic Pods
+        </a>
+        <button type="button" class="cyber-button" id="legendBtn" onclick="window.__openLegendModal && window.__openLegendModal()" style="display: inline-flex; align-items: center; gap: 6px;" title="Icon Legend">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          Legend
+        </button>
+      </div>
+    </div>
+
+    <!-- Vue 3 mount point (renders controls + table inside dashboard-container) -->
+    <div id="vue-root"></div>
+  </div>
+
+  <!-- Configuration -->
+  <script>
+    // Set configuration from backend template
+    window.RESTART_RED_THRESHOLD = {{restartRedThreshold}};
+    window.PRESETS = {
+      dev:  { namespace: "{{DEV_NAMESPACE}}", context: "{{DEV_KUBE_CONTEXT}}" },
+      prod: { namespace: "{{PROD_NAMESPACE}}", context: "{{PROD_KUBE_CONTEXT}}" },
+    };
+    window.IS_LOCAL_MODE = {{IS_LOCAL_MODE}};
+    window.IN_CLUSTER_NAMESPACE = "{{IN_CLUSTER_NAMESPACE}}";
+
+    // Humio config injected by backend
+    window.HUMIO_BASE_URL = '{{HUMIO_BASE_URL}}' || 'https://cloud.humio.com';
+    window.HUMIO_REPO = '{{HUMIO_REPO}}' || '';
+    window.HUMIO_TZ = '{{HUMIO_TZ}}' || 'Europe/Stockholm';
+    window.HUMIO_START = '{{HUMIO_START}}' || '7d';
+    window.HUMIO_NAMESPACE = '{{HUMIO_NAMESPACE}}' || '';
+  </script>
+
+  <!-- xterm.js (loaded before main module so Terminal, FitAddon, AttachAddon are available as globals) -->
+  <script src="https://unpkg.com/xterm@5.3.0/lib/xterm.js"></script>
+  <script src="https://unpkg.com/xterm-addon-attach@0.9.0/lib/xterm-addon-attach.js"></script>
+  <script src="https://unpkg.com/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+
+  <!-- Vue 3 Application -->
+  <script type="module" src="/dashboard/js/vue-app.js"></script>
+</body>
+</html>

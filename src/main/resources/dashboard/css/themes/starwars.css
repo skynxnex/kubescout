@@ -1,0 +1,607 @@
+/**
+ * Star Wars Theme
+ * A long time ago in a galaxy far, far away...
+ * Deep space backdrop with iconic yellow text and lightsaber glows
+ */
+
+/* ============================================
+   Color Variables
+   ============================================ */
+:root {
+  /* Space Background */
+  --cyber-bg-dark: #0a0a0f;
+  --cyber-bg-card: rgba(20, 20, 30, 0.85);
+  --cyber-bg-input: rgba(25, 25, 40, 0.9);
+
+  /* Star Wars Iconic Colors */
+  --neon-cyan: #4a9eff;
+  --neon-magenta: #ff3366;
+  --neon-orange: #ffa500;
+  --neon-purple: #9d4edd;
+  --neon-green: #39ff14;
+  --neon-yellow: #ffe81f;
+
+  /* Semantic Colors */
+  --color-success: #39ff14;
+  --color-warning: #ffe81f;
+  --color-danger: #ff3366;
+  --color-info: #4a9eff;
+
+  /* Text Colors - Star Wars Yellow */
+  --text-primary: #ffe81f;
+  --text-secondary: #ffcc00;
+  --text-muted: #997a00;
+
+  /* Accent RGB for rgba() usage in base.css */
+  --color-accent-rgb: 74, 158, 255;
+
+  /* Lightsaber Glow Effects */
+  --glow-cyan: 0 0 25px rgba(74, 158, 255, 0.8), 0 0 50px rgba(74, 158, 255, 0.4);
+  --glow-magenta: 0 0 25px rgba(255, 51, 102, 0.8), 0 0 50px rgba(255, 51, 102, 0.4);
+  --glow-orange: 0 0 25px rgba(255, 165, 0, 0.8);
+  --glow-yellow: 0 0 25px rgba(255, 232, 31, 0.8), 0 0 50px rgba(255, 232, 31, 0.4);
+  --glow-green: 0 0 25px rgba(57, 255, 20, 0.8), 0 0 50px rgba(57, 255, 20, 0.4);
+}
+
+/* ============================================
+   Animated Background - Starfield (Canvas-based)
+   ============================================ */
+/* Hide default background elements - we use canvas for starfield */
+.grid-overlay {
+  display: none !important;
+}
+
+.glow-orb {
+  display: none !important;
+}
+
+/* Starfield canvas styling */
+#starCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ============================================
+   Floating Refresh Button
+   ============================================ */
+.floating-refresh {
+  background: linear-gradient(135deg, #ffe81f, #ffa500);
+  box-shadow: 0 8px 24px rgba(255, 232, 31, 0.6);
+}
+
+.floating-refresh:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 12px 32px rgba(255, 232, 31, 0.8);
+}
+
+.floating-refresh.spinning svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   Notifications
+   ============================================ */
+.notification {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+  animation: slideDown 0.3s ease-out;
+  border: 2px solid;
+}
+
+.notification.removing {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.notification.error {
+  border-color: var(--color-danger);
+  background: rgba(255, 51, 102, 0.15);
+}
+
+.notification.success {
+  border-color: var(--color-success);
+  background: rgba(57, 255, 20, 0.15);
+}
+
+.notification.warning {
+  border-color: var(--color-warning);
+  background: rgba(255, 232, 31, 0.15);
+}
+
+.notification.info {
+  border-color: var(--color-info);
+  background: rgba(74, 158, 255, 0.15);
+}
+
+.notification.error .notification-icon svg { color: var(--color-danger); }
+.notification.success .notification-icon svg { color: var(--color-success); }
+.notification.warning .notification-icon svg { color: var(--color-warning); }
+.notification.info .notification-icon svg { color: var(--color-info); }
+
+.notification-close:hover {
+  background: rgba(255, 232, 31, 0.2);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Header - Opening Crawl Style
+   ============================================ */
+.glitch-text {
+  background: linear-gradient(135deg, #ffe81f, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(255, 232, 31, 0.5);
+}
+
+.pulse-dot {
+  background: var(--neon-green);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 15px var(--neon-green), 0 0 30px var(--neon-green);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+.meta-info code {
+  color: var(--neon-yellow);
+  background: rgba(255, 232, 31, 0.1);
+  border: 1px solid rgba(255, 232, 31, 0.3);
+}
+
+/* ============================================
+   Controls
+   ============================================ */
+.section-label {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 10px rgba(255, 232, 31, 0.5);
+}
+
+.cyber-input:focus,
+.cyber-select:focus {
+  border-color: var(--neon-yellow);
+  box-shadow: var(--glow-yellow);
+}
+
+.select-icon {
+  color: var(--neon-yellow);
+}
+
+.search-input:focus {
+  border-color: var(--neon-yellow);
+  box-shadow: var(--glow-yellow);
+}
+
+.search-clear:hover {
+  color: var(--text-primary);
+  background: rgba(255, 232, 31, 0.2);
+}
+
+/* Filter Chips */
+.filter-chip:hover {
+  border-color: var(--neon-yellow);
+  background: rgba(255, 232, 31, 0.1);
+}
+
+.filter-chip.active {
+  background: rgba(255, 232, 31, 0.2);
+  border-color: var(--neon-yellow);
+  color: var(--neon-yellow);
+  box-shadow: var(--glow-yellow);
+}
+
+.filter-chip.active svg {
+  color: var(--neon-yellow);
+}
+
+.filter-chip.active span {
+  color: var(--neon-yellow);
+}
+
+/* Buttons */
+.cyber-button:hover {
+  border-color: var(--neon-yellow);
+  background: rgba(255, 232, 31, 0.1);
+  box-shadow: var(--glow-yellow);
+}
+
+.cyber-button-primary {
+  background: linear-gradient(135deg, #ffe81f, #ffa500);
+  border: none;
+  color: #000;
+  font-weight: 900;
+  box-shadow: 0 4px 16px rgba(255, 232, 31, 0.6);
+}
+
+.cyber-button-primary:hover {
+  box-shadow: 0 6px 24px rgba(255, 232, 31, 0.8);
+  transform: translateY(-2px);
+}
+
+.loading-indicator {
+  color: var(--neon-yellow);
+}
+
+.cyber-spinner {
+  border-top-color: var(--neon-yellow);
+  animation: spin 0.8s linear infinite;
+}
+
+/* ============================================
+   Modern Table Styling
+   ============================================ */
+.modern-table-container {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.modern-table th {
+  color: var(--neon-yellow);
+  text-shadow: 0 0 10px rgba(255, 232, 31, 0.5);
+}
+
+.modern-table tbody tr:hover {
+  background: rgba(255, 232, 31, 0.08);
+  border-left: 3px solid var(--neon-yellow);
+}
+
+.modern-table tbody tr.clickable:hover {
+  background: rgba(255, 232, 31, 0.12);
+  box-shadow: inset 0 0 20px rgba(255, 232, 31, 0.2);
+}
+
+/* Status indicators - Lightsaber colors */
+.modern-table tbody tr.row-bad {
+  background: rgba(255, 51, 102, 0.15);
+  border-left: 3px solid var(--color-danger);
+}
+
+.modern-table tbody tr.row-warn {
+  background: rgba(255, 232, 31, 0.15);
+  border-left: 3px solid var(--color-warning);
+}
+
+.modern-table tbody tr.row-single {
+  background: rgba(74, 158, 255, 0.15);
+  border-left: 3px solid var(--color-info);
+}
+
+/* Status badges */
+.badge-success {
+  background: rgba(57, 255, 20, 0.2);
+  color: var(--color-success);
+  border: 2px solid var(--color-success);
+}
+
+.badge-warning {
+  background: rgba(255, 232, 31, 0.2);
+  color: var(--color-warning);
+  border: 2px solid var(--color-warning);
+}
+
+.badge-danger {
+  background: rgba(255, 51, 102, 0.2);
+  color: var(--color-danger);
+  border: 2px solid var(--color-danger);
+}
+
+.badge-info {
+  background: rgba(74, 158, 255, 0.2);
+  color: var(--color-info);
+  border: 2px solid var(--color-info);
+}
+
+/* Status badges with lightsaber glow */
+.status-badge svg {
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.status-badge.ok {
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.25), rgba(57, 255, 20, 0.15));
+  color: var(--neon-green);
+  border-color: var(--neon-green);
+  box-shadow: var(--glow-green);
+}
+
+.status-badge.ok:hover {
+  background: linear-gradient(135deg, rgba(57, 255, 20, 0.35), rgba(57, 255, 20, 0.2));
+  transform: scale(1.05);
+}
+
+.status-badge.warn {
+  background: linear-gradient(135deg, rgba(255, 232, 31, 0.3), rgba(255, 232, 31, 0.2));
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+  box-shadow: var(--glow-yellow);
+  animation: status-pulse-warning 3s ease-in-out infinite;
+}
+
+@keyframes status-pulse-warning {
+  0%, 100% {
+    box-shadow: var(--glow-yellow);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 232, 31, 1), 0 0 60px rgba(255, 232, 31, 0.6);
+  }
+}
+
+.status-badge.warn:hover {
+  background: linear-gradient(135deg, rgba(255, 232, 31, 0.4), rgba(255, 232, 31, 0.25));
+}
+
+.status-badge.bad {
+  background: linear-gradient(135deg, rgba(255, 51, 102, 0.35), rgba(255, 51, 102, 0.25));
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+  box-shadow: var(--glow-magenta);
+  animation: status-pulse-danger 2s ease-in-out infinite;
+}
+
+@keyframes status-pulse-danger {
+  0%, 100% {
+    box-shadow: var(--glow-magenta);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 51, 102, 1), 0 0 60px rgba(255, 51, 102, 0.6);
+  }
+}
+
+.status-badge.bad:hover {
+  background: linear-gradient(135deg, rgba(255, 51, 102, 0.45), rgba(255, 51, 102, 0.3));
+  transform: scale(1.05);
+}
+
+.status-badge.single-pod {
+  background: linear-gradient(135deg, rgba(74, 158, 255, 0.25), rgba(157, 78, 221, 0.2));
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.status-badge.single-pod:hover {
+  background: linear-gradient(135deg, rgba(74, 158, 255, 0.35), rgba(157, 78, 221, 0.25));
+  transform: scale(1.05);
+}
+
+/* Restart reason badges */
+.restart-badge.oomkilled {
+  background: rgba(255, 51, 102, 0.2);
+  color: var(--color-danger);
+  border: 2px solid var(--color-danger);
+}
+
+.restart-badge.oomkilled:hover {
+  background: rgba(255, 51, 102, 0.3);
+  box-shadow: var(--glow-magenta);
+  transform: scale(1.15);
+}
+
+.restart-badge.error {
+  background: rgba(255, 165, 0, 0.2);
+  color: var(--neon-orange);
+  border: 2px solid var(--neon-orange);
+}
+
+.restart-badge.error:hover {
+  background: rgba(255, 165, 0, 0.3);
+  box-shadow: var(--glow-orange);
+  transform: scale(1.15);
+}
+
+.restart-badge.completed {
+  background: rgba(74, 158, 255, 0.2);
+  color: var(--neon-cyan);
+  border: 2px solid var(--neon-cyan);
+}
+
+.restart-badge.completed:hover {
+  background: rgba(74, 158, 255, 0.3);
+  box-shadow: var(--glow-cyan);
+  transform: scale(1.15);
+}
+
+/* ============================================
+   Pod Cards
+   ============================================ */
+.pod-card {
+  background: linear-gradient(135deg,
+    rgba(255, 232, 31, 0.02) 0%,
+    rgba(74, 158, 255, 0.02) 100%);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 232, 31, 0.3);
+}
+
+.pod-card:hover {
+  border-color: var(--neon-yellow);
+  box-shadow: var(--glow-yellow);
+}
+
+.pod-card::before {
+  background: linear-gradient(90deg,
+    var(--neon-yellow) 0%,
+    var(--neon-cyan) 50%,
+    var(--neon-green) 100%);
+}
+
+.pod-card:hover {
+  transform: translateY(-2px);
+}
+
+.pod-card:hover::before {
+  opacity: 1;
+}
+
+.pod-name {
+  color: var(--neon-yellow);
+}
+
+.pod-link {
+  background: linear-gradient(135deg, var(--neon-yellow), var(--neon-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pod-link:hover {
+  filter: brightness(1.3);
+}
+
+/* Pod phase badges */
+.pod-phase-badge.running {
+  background: rgba(57, 255, 20, 0.2);
+  color: var(--neon-green);
+  border: 2px solid var(--neon-green);
+}
+
+.pod-phase-badge.running:hover {
+  box-shadow: var(--glow-green);
+}
+
+.pod-phase-badge.pending {
+  background: rgba(255, 232, 31, 0.2);
+  color: var(--color-warning);
+  border: 2px solid var(--color-warning);
+  animation: pulse-yellow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-yellow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(255, 232, 31, 0.5);
+  }
+  50% {
+    box-shadow: var(--glow-yellow);
+  }
+}
+
+.pod-phase-badge.failed,
+.pod-phase-badge.error {
+  background: rgba(255, 51, 102, 0.2);
+  color: var(--color-danger);
+  border: 2px solid var(--color-danger);
+}
+
+.pod-phase-badge.failed:hover,
+.pod-phase-badge.error:hover {
+  box-shadow: var(--glow-magenta);
+}
+
+.pod-phase-badge.succeeded,
+.pod-phase-badge.completed {
+  background: rgba(57, 255, 20, 0.2);
+  color: var(--neon-green);
+  border: 2px solid var(--neon-green);
+}
+
+.pod-phase-badge.crashloop {
+  background: rgba(255, 51, 102, 0.2);
+  color: var(--color-danger);
+  border: 2px solid var(--color-danger);
+  animation: pulse-red 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(255, 51, 102, 0.5);
+  }
+  50% {
+    box-shadow: var(--glow-magenta);
+  }
+}
+
+.pod-phase-badge.imagepull {
+  background: rgba(255, 165, 0, 0.2);
+  color: var(--neon-orange);
+  border: 2px solid var(--neon-orange);
+}
+
+.pod-phase-badge.imagepull:hover {
+  box-shadow: var(--glow-orange);
+}
+
+.pod-phase-badge.terminating {
+  background: rgba(157, 78, 221, 0.2);
+  color: var(--neon-purple);
+  border: 2px solid var(--neon-purple);
+  animation: fade-pulse 2s ease-in-out infinite;
+}
+
+.pod-phase-badge.evicted,
+.pod-phase-badge.unknown {
+  background: rgba(153, 122, 0, 0.2);
+  color: var(--text-muted);
+  border: 2px solid var(--text-muted);
+}
+
+/* Resource usage progress bars */
+.resource-value {
+  color: var(--neon-yellow);
+}
+
+.progress-bar {
+  background: rgba(25, 25, 40, 0.8);
+  border: 1px solid rgba(255, 232, 31, 0.3);
+}
+
+.progress-fill {
+  box-shadow: 0 0 10px currentColor;
+}
+
+.progress-fill::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+.progress-fill.low {
+  background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+}
+
+.progress-fill.medium {
+  background: linear-gradient(90deg, var(--neon-yellow), var(--neon-orange));
+}
+
+.progress-fill.high {
+  background: linear-gradient(90deg, var(--neon-orange), var(--color-danger));
+}
+
+/* ============================================
+   Links
+   ============================================ */
+a:hover {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 15px currentColor;
+}
+
+/* ============================================
+   Expand Button
+   ============================================ */
+.expand-button {
+  color: var(--neon-yellow);
+  border-color: rgba(255, 232, 31, 0.4);
+}
+
+.expand-button:hover {
+  border-color: var(--neon-yellow);
+  background: rgba(255, 232, 31, 0.15);
+  box-shadow: var(--glow-yellow);
+}
+
+/* ============================================
+   Loading Overlay
+   ============================================ */
+.loading-overlay {
+  background: rgba(10, 10, 15, 0.95);
+}

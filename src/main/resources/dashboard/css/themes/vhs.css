@@ -1,0 +1,579 @@
+/**
+ * VHS Glitch Theme
+ * Warm analog videotape aesthetic — worn, desaturated, organic.
+ * Tape-orange/red accents on brown-black backgrounds. No neon, no electric blue.
+ */
+
+/* ============================================
+   Color Variables
+   ============================================ */
+:root {
+  /* Background Colors — warm brown-black, not blue-black */
+  --cyber-bg-dark: #080603;
+  --cyber-bg-card: rgba(14, 10, 6, 0.85);
+  --cyber-bg-input: rgba(20, 14, 8, 0.90);
+
+  /* VHS Palette — tape-worn, desaturated, warm */
+  --neon-cyan:    #ff4400;  /* tape-orange/red — replaces cyan as primary accent */
+  --neon-magenta: #ffdd00;  /* VHS label yellow */
+  --neon-orange:  #cc3300;  /* darker tape red */
+  --neon-purple:  #ff8833;  /* warm amber */
+  --neon-green:   #88aa44;  /* desaturated olive green */
+  --neon-yellow:  #ffcc44;  /* warm yellow */
+
+  /* Semantic Colors */
+  --color-success: #88aa44;  /* olive, not neon green */
+  --color-warning: #ffcc44;
+  --color-danger:  #ff2200;
+  --color-info:    #ff8833;  /* warm amber, not cyan/purple */
+
+  /* Text Colors — warm off-white, like old paper */
+  --text-primary:   #f0e4c8;
+  --text-secondary: #a08060;
+  --text-muted:     #604030;
+
+  /* Accent RGB for rgba() usage in base.css */
+  --color-accent-rgb: 255, 68, 0;
+
+  /* Glow Effects — warm, not electric */
+  --glow-cyan:    0 0 20px rgba(255, 68, 0, 0.5), 0 0 40px rgba(255, 68, 0, 0.15);
+  --glow-magenta: 0 0 20px rgba(255, 221, 0, 0.4);
+  --glow-orange:  0 0 20px rgba(204, 51, 0, 0.5);
+  --glow-yellow:  0 0 20px rgba(255, 204, 68, 0.4);
+  --glow-green:   0 0 20px rgba(136, 170, 68, 0.4);
+}
+
+/* ============================================
+   Body Background — transparent so video shows through
+   ============================================ */
+body[data-theme="vhs"] body {
+  background-color: transparent;
+}
+
+/* ============================================
+   Horizontal Scan-Line Overlay
+   ============================================ */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+}
+
+/* ============================================
+   Animated Background
+   ============================================ */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 68, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 68, 0, 0.03) 1px, transparent 1px);
+  animation: gridMove 25s linear infinite;
+}
+
+.glow-orb {
+  opacity: 0.15;
+}
+
+.glow-orb-1 {
+  background: radial-gradient(circle, #ff4400, transparent);
+}
+
+.glow-orb-2 {
+  background: radial-gradient(circle, #cc3300, transparent);
+}
+
+.glow-orb-3 {
+  background: radial-gradient(circle, #ff8833, transparent);
+}
+
+/* ============================================
+   Floating Refresh Button
+   ============================================ */
+.floating-refresh {
+  background: linear-gradient(135deg, #ff4400, #cc3300);
+  box-shadow: 0 8px 24px rgba(255, 68, 0, 0.4);
+}
+
+.floating-refresh:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(255, 68, 0, 0.6);
+}
+
+/* ============================================
+   Notifications
+   ============================================ */
+.notification {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  animation: slideDown 0.3s ease-out;
+}
+
+.notification.removing {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.notification.error {
+  border-color: var(--color-danger);
+  background: rgba(255, 34, 0, 0.1);
+}
+
+.notification.success {
+  border-color: var(--color-success);
+  background: rgba(136, 170, 68, 0.1);
+}
+
+.notification.warning {
+  border-color: var(--color-warning);
+  background: rgba(255, 204, 68, 0.1);
+}
+
+.notification.info {
+  border-color: var(--color-info);
+  background: rgba(255, 136, 51, 0.1);
+}
+
+.notification.error .notification-icon svg   { color: var(--color-danger); }
+.notification.success .notification-icon svg { color: var(--color-success); }
+.notification.warning .notification-icon svg { color: var(--color-warning); }
+.notification.info .notification-icon svg    { color: var(--color-info); }
+
+.notification-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.glitch-text {
+  background: linear-gradient(135deg, #ff4400, #ffdd00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pulse-dot {
+  background: var(--neon-green);
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--neon-green);
+}
+
+.meta-info code {
+  color: var(--neon-cyan);
+}
+
+/* ============================================
+   Controls
+   ============================================ */
+.section-label {
+  color: var(--neon-cyan);
+}
+
+.cyber-input:focus,
+.cyber-select:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.select-icon {
+  color: var(--neon-cyan);
+}
+
+.search-input:focus {
+  border-color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.search-clear:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.filter-chip:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(255, 68, 0, 0.1);
+}
+
+.filter-chip.active {
+  background: rgba(255, 68, 0, 0.15);
+  border-color: var(--neon-cyan);
+  color: var(--neon-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.filter-chip.active svg  { color: var(--neon-cyan); }
+.filter-chip.active span { color: var(--neon-cyan); }
+
+.cyber-button:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(255, 68, 0, 0.1);
+  box-shadow: var(--glow-cyan);
+}
+
+.cyber-button-primary {
+  background: linear-gradient(135deg, #ff4400, #cc3300);
+  border: none;
+  color: #f0e4c8;
+  box-shadow: 0 4px 16px rgba(255, 68, 0, 0.4);
+}
+
+.cyber-button-primary:hover {
+  box-shadow: 0 6px 24px rgba(255, 68, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+.loading-indicator {
+  color: var(--neon-cyan);
+}
+
+.cyber-spinner {
+  border-top-color: var(--neon-cyan);
+  animation: spin 0.8s linear infinite;
+}
+
+/* ============================================
+   Modern Table Styling
+   ============================================ */
+.modern-table-container {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.modern-table th {
+  color: var(--neon-cyan);
+}
+
+.modern-table tbody tr:hover {
+  background: rgba(255, 68, 0, 0.05);
+  border-left: 3px solid var(--neon-cyan);
+}
+
+.modern-table tbody tr.clickable:hover {
+  background: rgba(255, 68, 0, 0.08);
+  box-shadow: inset 0 0 20px rgba(255, 68, 0, 0.06);
+}
+
+.modern-table tbody tr.row-bad {
+  background: rgba(255, 34, 0, 0.15);
+  border-left: 3px solid var(--color-danger);
+}
+
+.modern-table tbody tr.row-warn {
+  background: rgba(255, 204, 68, 0.12);
+  border-left: 3px solid var(--color-warning);
+}
+
+.modern-table tbody tr.row-single {
+  background: rgba(255, 136, 51, 0.08);
+  border-left: 3px solid var(--color-info);
+}
+
+/* Status badges */
+.badge-success {
+  background: rgba(136, 170, 68, 0.2);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.badge-warning {
+  background: rgba(255, 204, 68, 0.2);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+}
+
+.badge-danger {
+  background: rgba(255, 34, 0, 0.2);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.badge-info {
+  background: rgba(255, 136, 51, 0.2);
+  color: var(--color-info);
+  border: 1px solid var(--color-info);
+}
+
+.status-badge svg {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.status-badge.ok {
+  background: linear-gradient(135deg, rgba(136, 170, 68, 0.2), rgba(136, 170, 68, 0.1));
+  color: var(--neon-green);
+  border-color: var(--neon-green);
+  box-shadow: 0 0 10px rgba(136, 170, 68, 0.2);
+}
+
+.status-badge.ok:hover {
+  background: linear-gradient(135deg, rgba(136, 170, 68, 0.3), rgba(136, 170, 68, 0.15));
+  box-shadow: 0 0 15px rgba(136, 170, 68, 0.4);
+}
+
+.status-badge.warn {
+  background: linear-gradient(135deg, rgba(255, 204, 68, 0.25), rgba(255, 204, 68, 0.15));
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+  box-shadow: 0 0 10px rgba(255, 204, 68, 0.3);
+  animation: status-pulse-warning 3s ease-in-out infinite;
+}
+
+.status-badge.warn:hover {
+  background: linear-gradient(135deg, rgba(255, 204, 68, 0.35), rgba(255, 204, 68, 0.2));
+}
+
+.status-badge.bad {
+  background: linear-gradient(135deg, rgba(255, 34, 0, 0.3), rgba(255, 34, 0, 0.2));
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+  box-shadow: 0 0 15px rgba(255, 34, 0, 0.4), 0 0 30px rgba(255, 34, 0, 0.2);
+  animation: status-pulse-danger 2s ease-in-out infinite;
+}
+
+.status-badge.bad:hover {
+  background: linear-gradient(135deg, rgba(255, 34, 0, 0.4), rgba(255, 34, 0, 0.25));
+  transform: scale(1.02);
+}
+
+.status-badge.single-pod {
+  background: linear-gradient(135deg, rgba(255, 68, 0, 0.2), rgba(255, 136, 51, 0.15));
+  color: var(--neon-cyan);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 10px rgba(255, 68, 0, 0.3);
+}
+
+.status-badge.single-pod:hover {
+  background: linear-gradient(135deg, rgba(255, 68, 0, 0.3), rgba(255, 136, 51, 0.2));
+  box-shadow: 0 0 15px rgba(255, 68, 0, 0.5);
+  transform: scale(1.05);
+}
+
+/* Restart reason badges */
+.restart-badge.oomkilled {
+  background: rgba(255, 34, 0, 0.15);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.restart-badge.oomkilled:hover {
+  background: rgba(255, 34, 0, 0.25);
+  box-shadow: 0 0 10px rgba(255, 34, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.restart-badge.error {
+  background: rgba(204, 51, 0, 0.15);
+  color: var(--neon-orange);
+  border: 1px solid var(--neon-orange);
+}
+
+.restart-badge.error:hover {
+  background: rgba(204, 51, 0, 0.25);
+  box-shadow: 0 0 10px rgba(204, 51, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.restart-badge.completed {
+  background: rgba(255, 68, 0, 0.15);
+  color: var(--neon-cyan);
+  border: 1px solid var(--neon-cyan);
+}
+
+.restart-badge.completed:hover {
+  background: rgba(255, 68, 0, 0.25);
+  box-shadow: 0 0 10px rgba(255, 68, 0, 0.5);
+  transform: scale(1.1);
+}
+
+/* ============================================
+   Pod Cards
+   ============================================ */
+.pod-card {
+  background: linear-gradient(135deg,
+    rgba(255, 68, 0, 0.02) 0%,
+    rgba(204, 51, 0, 0.02) 100%);
+  backdrop-filter: blur(10px);
+}
+
+.pod-card::before {
+  background: linear-gradient(90deg,
+    #ff4400 0%,
+    #cc3300 50%,
+    #ff8833 100%);
+}
+
+.pod-card:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 20px rgba(255, 68, 0, 0.3),
+              0 0 40px rgba(204, 51, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.pod-card:hover::before {
+  opacity: 1;
+}
+
+.pod-name {
+  color: var(--neon-cyan);
+}
+
+.pod-link {
+  background: linear-gradient(135deg, #ff4400, #ffdd00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pod-link:hover {
+  filter: brightness(1.2);
+}
+
+/* Pod phase badges */
+.pod-phase-badge.running {
+  background: rgba(136, 170, 68, 0.15);
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+}
+
+.pod-phase-badge.running:hover {
+  box-shadow: 0 0 12px rgba(136, 170, 68, 0.5);
+}
+
+.pod-phase-badge.pending {
+  background: rgba(255, 204, 68, 0.15);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+  animation: pulse-yellow 2s ease-in-out infinite;
+}
+
+.pod-phase-badge.failed,
+.pod-phase-badge.error {
+  background: rgba(255, 34, 0, 0.15);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.pod-phase-badge.failed:hover,
+.pod-phase-badge.error:hover {
+  box-shadow: 0 0 12px rgba(255, 34, 0, 0.5);
+}
+
+.pod-phase-badge.succeeded,
+.pod-phase-badge.completed {
+  background: rgba(136, 170, 68, 0.15);
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+}
+
+.pod-phase-badge.crashloop {
+  background: rgba(255, 34, 0, 0.15);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+  animation: pulse-red 1.5s ease-in-out infinite;
+}
+
+.pod-phase-badge.imagepull {
+  background: rgba(204, 51, 0, 0.15);
+  color: var(--neon-orange);
+  border: 1px solid var(--neon-orange);
+}
+
+.pod-phase-badge.imagepull:hover {
+  box-shadow: 0 0 12px rgba(204, 51, 0, 0.5);
+}
+
+.pod-phase-badge.terminating {
+  background: rgba(255, 136, 51, 0.15);
+  color: var(--neon-purple);
+  border: 1px solid var(--neon-purple);
+  animation: fade-pulse 2s ease-in-out infinite;
+}
+
+.pod-phase-badge.evicted,
+.pod-phase-badge.unknown {
+  background: rgba(96, 64, 48, 0.15);
+  color: var(--text-muted);
+  border: 1px solid var(--text-muted);
+}
+
+/* Resource bars */
+.resource-value {
+  color: var(--neon-cyan);
+}
+
+.progress-bar {
+  background: rgba(20, 14, 8, 0.8);
+}
+
+.progress-fill {
+  box-shadow: 0 0 8px currentColor;
+}
+
+.progress-fill::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+.progress-fill.low {
+  background: linear-gradient(90deg, #88aa44, #ffcc44);
+}
+
+.progress-fill.medium {
+  background: linear-gradient(90deg, #ff8833, #ffdd00);
+}
+
+.progress-fill.high {
+  background: linear-gradient(90deg, #cc3300, #ff2200);
+}
+
+/* ============================================
+   Links
+   ============================================ */
+a:hover {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px currentColor;
+}
+
+/* ============================================
+   Expand Button
+   ============================================ */
+.expand-button {
+  color: var(--neon-cyan);
+}
+
+.expand-button:hover {
+  border-color: var(--neon-cyan);
+  background: rgba(255, 68, 0, 0.1);
+  box-shadow: 0 0 15px rgba(255, 68, 0, 0.3);
+}
+
+/* ============================================
+   Loading Overlay
+   ============================================ */
+.loading-overlay {
+  background: rgba(8, 6, 3, 0.92);
+}
+
+/* ============================================
+   VHS Glitch keyframes — theme-specific
+   ============================================ */
+@keyframes vhsGlitch {
+  0%, 100% { transform: translate(0); }
+  20%       { transform: translate(-2px, 1px); }
+  40%       { transform: translate(2px, -1px); }
+  60%       { transform: translate(-1px, 2px); }
+  80%       { transform: translate(1px, -2px); }
+}

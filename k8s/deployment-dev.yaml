@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kss
+  namespace: your-namespace
+  labels:
+    app: kss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kss
+  template:
+    metadata:
+      labels:
+        app: kss
+    spec:
+      serviceAccountName: kss
+      containers:
+        - name: kss
+          image: kubescout:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kss
+  namespace: your-namespace
+  labels:
+    app: kss
+spec:
+  type: ClusterIP
+  selector:
+    app: kss
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kss
+  namespace: your-namespace
+# Add imagePullSecrets here if your registry requires authentication, e.g.:
+# imagePullSecrets:
+#   - name: your-registry-secret
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kss
+  namespace: your-namespace
+rules:
+  # Core API resources - read-only access
+  - apiGroups: [""]
+    resources: ["services", "pods"]
+    verbs: ["get", "list", "watch"]
+
+  # Feature 2: Pod Logs - read pod logs
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
+
+  # Pod Shell Terminal - exec access
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["get", "create"]
+
+  # Feature 1: Pod Events - view events for debugging
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["get", "list"]
+
+  # Feature 4: ConfigMap Viewer - read-only access to configmaps
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list"]
+
+  # Feature 4: Secret Viewer - read-only access (metadata only, values not exposed in API)
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+
+  # Feature 5: Service Endpoints - view endpoints for service details
+  - apiGroups: [""]
+    resources: ["endpoints"]
+    verbs: ["get", "list"]
+
+  # Metrics API - resource usage monitoring
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods"]
+    verbs: ["get", "list"]
+
+  # Autoscaling - HPA information
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+
+  # Apps API - deployments and replicasets
+  - apiGroups: ["apps"]
+    resources: ["replicasets"]
+    verbs: ["get", "list", "watch"]
+
+  # Feature 3: Scale Deployment - read and update deployment scale
+  - apiGroups: ["apps"]
+    resources: ["deployments", "deployments/scale"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+
+  # Feature 5: Ingress information for service endpoints
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kss
+  namespace: your-namespace
+subjects:
+  - kind: ServiceAccount
+    name: kss
+roleRef:
+  kind: Role
+  name: kss
+  apiGroup: rbac.authorization.k8s.io
