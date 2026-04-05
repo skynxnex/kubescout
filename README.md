@@ -1,6 +1,6 @@
 # Kubescout — Kubernetes Service Summary
 
-Kubescout is a Kotlin/Spring Boot dashboard for monitoring Kubernetes services, pods, and resource usage. It provides a visual overview of service health, pod-level CPU/memory details, auto-refresh every 60 seconds, and a suite of operational tools including pod log streaming, events timeline, deployment rollback, an exec terminal, ConfigMap/Secret viewer, and service endpoint/ingress inspection — all served through a browser UI with six visual themes and animated backgrounds.
+Kubescout is a Kotlin/Spring Boot dashboard for monitoring Kubernetes services, pods, and resource usage. It provides a visual overview of service health, pod-level CPU/memory details, auto-refresh every 60 seconds, and a suite of operational tools including pod log streaming, events timeline, deployment rollback, an exec terminal, ConfigMap/Secret viewer, and service endpoint/ingress inspection — all served through a browser UI with six visual themes and animated backgrounds. Log platform links (Humio/LogScale, Grafana, Datadog) can be enabled via the `LOG_*` environment variables.
 
 ## Getting Started (locally)
 
@@ -84,11 +84,13 @@ yarn stop       # stop all containers
 | `DEV_KUBE_CONTEXT` | — | kubeconfig context for the Dev preset |
 | `PROD_NAMESPACE` | — | Namespace for the Prod preset button in the UI |
 | `PROD_KUBE_CONTEXT` | — | kubeconfig context for the Prod preset |
-| `HUMIO_BASE_URL` | `https://cloud.humio.com` | Base URL for Humio log links |
-| `HUMIO_REPO` | — | Humio repository |
-| `HUMIO_TZ` | `Europe/Stockholm` | Timezone for Humio log queries |
-| `HUMIO_START` | `7d` | Default lookback window for Humio queries |
-| `HUMIO_NAMESPACE` | — | Namespace filter injected into Humio log links |
+| `LOG_PROVIDER` | — | Log platform: `humio`, `grafana`, or `datadog`. Leave empty to disable log links. |
+| `LOG_BASE_URL` | — | Base URL for your log platform |
+| `LOG_REPO` | — | Repository/index name (Humio only) |
+| `LOG_DATASOURCE` | `Loki` | Datasource name (Grafana only) |
+| `LOG_TZ` | `UTC` | Timezone for log queries |
+| `LOG_START` | `7d` | Default lookback window |
+| `LOG_NAMESPACE` | — | Namespace filter injected into log queries |
 | `DASHBOARD_RESTART_RED_THRESHOLD` | `3` | Restart count at which a service row turns red |
 | `MAX_REPLICAS` | `50` | Upper bound for scale-deployment operations |
 

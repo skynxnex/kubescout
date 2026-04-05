@@ -126,64 +126,136 @@ export function renderServiceLogsButton(item) {
 }
 
 /**
- * Build Humio service URL (logs for all pods in service)
- * @param {string} serviceName - Service name
- * @param {string} [namespace] - Kubernetes namespace (overrides window.HUMIO_NAMESPACE)
- * @returns {string} Humio search URL
+ * Return a display label for the configured log provider.
+ * @returns {string} e.g. 'Humio', 'Grafana', 'Datadog', or 'logs'
  */
-export function buildHumioServiceUrl(serviceName, namespace) {
-  const base = String(window.HUMIO_BASE_URL || '').replace(/\/+$/, '');
-  const repo = encodeURIComponent(String(window.HUMIO_REPO || '').trim());
-  const tz = encodeURIComponent(String(window.HUMIO_TZ || '').trim() || 'Europe/Stockholm');
-  const start = encodeURIComponent(String(window.HUMIO_START || '').trim() || '7d');
-
-  const columns = encodeURIComponent('[{"type":"time","width":"content"},{"type":"field","fieldName":"@rawstring","format":"logline"}]');
-  const query = encodeURIComponent(
-    'kubernetes.namespace_name = "' + String(namespace || window.HUMIO_NAMESPACE || '').trim() + '"\n' +
-    '| kubernetes.labels.app = "*' + String(serviceName || '').trim().replaceAll('"', '') + '*"'
-  );
-
-  return base + '/' + repo + '/search' +
-    '?columns=' + columns +
-    '&live=false' +
-    '&newestAtBottom=true' +
-    '&query=' + query +
-    '&showOnlyFirstLine=false' +
-    '&start=' + start +
-    '&tz=' + tz +
-    '&widgetType=list-view';
+function logProviderLabel() {
+  const p = String(window.LOG_PROVIDER || '').trim().toLowerCase();
+  if (p === 'humio')   return 'Humio';
+  if (p === 'grafana') return 'Grafana';
+  if (p === 'datadog') return 'Datadog';
+  return 'logs';
 }
 
 /**
- * Build Humio pod URL (logs for specific pod)
- * @param {string} podName - Pod name
- * @param {string} serviceName - Service name (for kubernetes.labels.app filter)
- * @param {string} namespace - Kubernetes namespace
- * @returns {string} Humio search URL
+ * Build a service log search URL for the configured log provider.
+ * Reads window.LOG_PROVIDER to select the correct URL format.
+ * Returns '' if LOG_PROVIDER is empty or unrecognized.
+ *
+ * @param {string} serviceName - Service name
+ * @param {string} [namespace] - Kubernetes namespace (overrides window.LOG_NAMESPACE)
+ * @returns {string} Log search URL, or '' if no provider configured
  */
-export function buildHumioPodLogsUrl(podName, serviceName, namespace) {
-  const base = String(window.HUMIO_BASE_URL || '').replace(/\/+$/, '');
-  const repo = encodeURIComponent(String(window.HUMIO_REPO || '').trim());
-  const tz = encodeURIComponent(String(window.HUMIO_TZ || '').trim() || 'Europe/Stockholm');
-  const start = encodeURIComponent(String(window.HUMIO_START || '').trim() || '7d');
+export function buildServiceLogsUrl(serviceName, namespace) {
+  const provider = String(window.LOG_PROVIDER || '').trim().toLowerCase();
+  const base = String(window.LOG_BASE_URL || '').replace(/\/+$/, '');
+  const ns = String(namespace || window.LOG_NAMESPACE || '').trim();
+  const svc = String(serviceName || '').trim().replaceAll('"', '');
+  const start = String(window.LOG_START || '').trim() || '7d';
 
-  const columns = encodeURIComponent('[{"type":"time","width":"content"},{"type":"field","fieldName":"@rawstring","format":"logline"}]');
-  const query = encodeURIComponent(
-    'kubernetes.namespace_name = "' + String(namespace || '').trim() + '"\n' +
-    '| kubernetes.labels.app = "*' + String(serviceName || '').trim().replaceAll('"', '') + '*"\n' +
-    '| kubernetes.pod_name = "' + String(podName || '').trim().replaceAll('"', '') + '"'
-  );
+  if (provider === 'humio') {
+    const repo = encodeURIComponent(String(window.LOG_REPO || '').trim());
+    const tz   = encodeURIComponent(String(window.LOG_TZ || '').trim() || 'Europe/Stockholm');
+    const startEnc = encodeURIComponent(start);
+    const columns = encodeURIComponent('[{"type":"time","width":"content"},{"type":"field","fieldName":"@rawstring","format":"logline"}]');
+    const query = encodeURIComponent(
+      'kubernetes.namespace_name = "' + ns + '"\n' +
+      '| kubernetes.labels.app = "*' + svc + '*"'
+    );
+    return base + '/' + repo + '/search' +
+      '?columns=' + columns +
+      '&live=false' +
+      '&newestAtBottom=true' +
+      '&query=' + query +
+      '&showOnlyFirstLine=false' +
+      '&start=' + startEnc +
+      '&tz=' + tz +
+      '&widgetType=list-view';
+  }
 
-  return base + '/' + repo + '/search' +
-    '?columns=' + columns +
-    '&live=false' +
-    '&newestAtBottom=true' +
-    '&query=' + query +
-    '&showOnlyFirstLine=false' +
-    '&start=' + start +
-    '&tz=' + tz +
-    '&widgetType=list-view';
+  if (provider === 'grafana') {
+    const datasource = String(window.LOG_DATASOURCE || '').trim();
+    const expr = `{namespace="${ns}", app="${svc}"}`;
+    const left = JSON.stringify({
+      datasource,
+      queries: [{ refId: 'A', expr }],
+      range: { from: `now-${start}`, to: 'now' }
+    });
+    return `${base}/explore?orgId=1&left=${encodeURIComponent(left)}`;
+  }
+
+  if (provider === 'datadog') {
+    const query = encodeURIComponent(`kube_namespace:${ns} service:${svc}`);
+    return `${base}/logs?query=${query}&from_ts=now-${encodeURIComponent(start)}&to_ts=now`;
+  }
+
+  return '';
 }
+
+/**
+ * Build a pod log search URL for the configured log provider.
+ * Reads window.LOG_PROVIDER to select the correct URL format.
+ * Returns '' if LOG_PROVIDER is empty or unrecognized.
+ *
+ * @param {string} podName - Pod name
+ * @param {string} serviceName - Service name (used as label filter in Humio)
+ * @param {string} namespace - Kubernetes namespace
+ * @returns {string} Log search URL, or '' if no provider configured
+ */
+export function buildPodLogsUrl(podName, serviceName, namespace) {
+  const provider = String(window.LOG_PROVIDER || '').trim().toLowerCase();
+  const base = String(window.LOG_BASE_URL || '').replace(/\/+$/, '');
+  const ns = String(namespace || '').trim();
+  const pod = String(podName || '').trim().replaceAll('"', '');
+  const svc = String(serviceName || '').trim().replaceAll('"', '');
+  const start = String(window.LOG_START || '').trim() || '7d';
+
+  if (provider === 'humio') {
+    const repo = encodeURIComponent(String(window.LOG_REPO || '').trim());
+    const tz   = encodeURIComponent(String(window.LOG_TZ || '').trim() || 'Europe/Stockholm');
+    const startEnc = encodeURIComponent(start);
+    const columns = encodeURIComponent('[{"type":"time","width":"content"},{"type":"field","fieldName":"@rawstring","format":"logline"}]');
+    const query = encodeURIComponent(
+      'kubernetes.namespace_name = "' + ns + '"\n' +
+      '| kubernetes.labels.app = "*' + svc + '*"\n' +
+      '| kubernetes.pod_name = "' + pod + '"'
+    );
+    return base + '/' + repo + '/search' +
+      '?columns=' + columns +
+      '&live=false' +
+      '&newestAtBottom=true' +
+      '&query=' + query +
+      '&showOnlyFirstLine=false' +
+      '&start=' + startEnc +
+      '&tz=' + tz +
+      '&widgetType=list-view';
+  }
+
+  if (provider === 'grafana') {
+    const datasource = String(window.LOG_DATASOURCE || '').trim();
+    const expr = `{namespace="${ns}", pod="${pod}"}`;
+    const left = JSON.stringify({
+      datasource,
+      queries: [{ refId: 'A', expr }],
+      range: { from: `now-${start}`, to: 'now' }
+    });
+    return `${base}/explore?orgId=1&left=${encodeURIComponent(left)}`;
+  }
+
+  if (provider === 'datadog') {
+    const query = encodeURIComponent(`kube_namespace:${ns} pod_name:${pod}`);
+    return `${base}/logs?query=${query}&from_ts=now-${encodeURIComponent(start)}&to_ts=now`;
+  }
+
+  return '';
+}
+
+/**
+ * Backward-compatible aliases — callers using the old Humio-specific names continue to work.
+ * @deprecated Use buildServiceLogsUrl / buildPodLogsUrl instead.
+ */
+export const buildHumioServiceUrl   = buildServiceLogsUrl;
+export const buildHumioPodLogsUrl   = buildPodLogsUrl;
 
 /**
  * Render service name as link to Humio
@@ -194,8 +266,8 @@ export function renderServiceLink(item) {
   const name = escapeHtml(item.serviceName || '');
   const namespace = item.namespace ||
     document.getElementById('namespaceInput')?.value ||
-    window.HUMIO_NAMESPACE;
-  const url = buildHumioServiceUrl(item.serviceName || '', namespace);
+    window.LOG_NAMESPACE;
+  const url = buildServiceLogsUrl(item.serviceName || '', namespace);
 
   return `<a href="${url}" class="service-link" target="_blank" rel="noopener">${name}</a>`;
 }
@@ -483,12 +555,16 @@ export function renderPodCard(pod, serviceName, namespace, formatters) {
     : null;
 
   const podName = escapeHtml(pod.podName || '');
-  const logsUrl = buildHumioPodLogsUrl(pod.podName || '', serviceName || '', namespace || '');
+  const logsUrl = buildPodLogsUrl(pod.podName || '', serviceName || '', namespace || '');
+  const logsTooltip = `View logs in ${logProviderLabel()}`;
+  const podNameNode = logsUrl
+    ? `<a href="${logsUrl}" class="pod-link" target="_blank" rel="noopener" title="${logsTooltip}">${podName}</a>`
+    : `<span class="pod-link">${podName}</span>`;
 
   return `<div class="pod-card" data-pod-name="${podName}">
     <div class="pod-card-header">
       <div class="pod-card-name">
-        <a href="${logsUrl}" class="pod-link" target="_blank" rel="noopener" title="View logs in Humio">${podName}</a>
+        ${podNameNode}
       </div>
       <div class="pod-card-actions">
         <button class="pod-logs-btn" data-pod="${podName}" title="View logs">

@@ -140,12 +140,14 @@
       prod: { namespace: "{{PROD_NAMESPACE}}", context: "{{PROD_KUBE_CONTEXT}}" },
     };
 
-    // Humio config injected by backend
-    window.HUMIO_BASE_URL = '{{HUMIO_BASE_URL}}' || 'https://cloud.humio.com';
-    window.HUMIO_REPO = '{{HUMIO_REPO}}' || '';
-    window.HUMIO_TZ = '{{HUMIO_TZ}}' || 'Europe/Stockholm';
-    window.HUMIO_START = '{{HUMIO_START}}' || '7d';
-    window.HUMIO_NAMESPACE = '{{HUMIO_NAMESPACE}}' || '';
+    // Log viewer config injected by backend
+    window.LOG_PROVIDER = '{{LOG_PROVIDER}}' || '';
+    window.LOG_BASE_URL = '{{LOG_BASE_URL}}' || '';
+    window.LOG_REPO = '{{LOG_REPO}}' || '';
+    window.LOG_DATASOURCE = '{{LOG_DATASOURCE}}' || 'Loki';
+    window.LOG_TZ = '{{LOG_TZ}}' || 'UTC';
+    window.LOG_START = '{{LOG_START}}' || '7d';
+    window.LOG_NAMESPACE = '{{LOG_NAMESPACE}}' || '';
   </script>
 
   <!-- Main JavaScript Module -->

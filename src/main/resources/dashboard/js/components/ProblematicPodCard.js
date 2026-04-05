@@ -9,7 +9,7 @@
  * CDN-Vue pattern: destructure from global window.Vue — no ESM import from 'vue'.
  */
 
-import { fmtCpuVal, fmtMemVal, fmtAge, buildHumioPodLogsUrl } from '../modules/formatters.js';
+import { fmtCpuVal, fmtMemVal, fmtAge, buildPodLogsUrl } from '../modules/formatters.js';
 import { getPodStatus } from './serviceUtils.js';
 
 const { defineComponent, computed, h } = Vue;
@@ -115,8 +115,16 @@ export const ProblematicPodCard = defineComponent({
     );
 
     const logsUrl = computed(() =>
-      buildHumioPodLogsUrl(props.pod.podName || '', props.serviceName, props.namespace)
+      buildPodLogsUrl(props.pod.podName || '', props.serviceName, props.namespace)
     );
+
+    const logsTooltip = computed(() => {
+      const p = String(window.LOG_PROVIDER || '').trim().toLowerCase();
+      if (p === 'humio')   return 'View logs in Humio';
+      if (p === 'grafana') return 'View logs in Grafana';
+      if (p === 'datadog') return 'View logs in Datadog';
+      return 'View logs';
+    });
 
     const ageText = computed(() =>
       created.value ? fmtAge(created.value) : 'n/a'
@@ -128,15 +136,17 @@ export const ProblematicPodCard = defineComponent({
 
       // Header row
       const headerNode = h('div', { class: 'pod-card-header' }, [
-        // Pod name as Humio log link
+        // Pod name as log provider link (or plain span if no provider configured)
         h('div', { class: 'pod-card-name' },
-          h('a', {
-            href: logsUrl.value,
-            class: 'pod-link',
-            target: '_blank',
-            rel: 'noopener',
-            title: 'View logs in Humio',
-          }, podName)
+          logsUrl.value
+            ? h('a', {
+                href: logsUrl.value,
+                class: 'pod-link',
+                target: '_blank',
+                rel: 'noopener',
+                title: logsTooltip.value,
+              }, podName)
+            : h('span', { class: 'pod-link' }, podName)
         ),
         // Actions + phase badge
         h('div', { class: 'pod-card-actions' }, [

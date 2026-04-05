@@ -131,12 +131,14 @@ const RESTART_RED_THRESHOLD = window.RESTART_RED_THRESHOLD || 3;
 const PRESETS = window.PRESETS || {};
 const IS_LOCAL_MODE = window.IS_LOCAL_MODE || false;
 
-// Humio configuration
-const HUMIO_BASE_URL = window.HUMIO_BASE_URL || 'https://cloud.humio.com';
-const HUMIO_REPO = window.HUMIO_REPO || '';
-const HUMIO_TZ = window.HUMIO_TZ || 'Europe/Stockholm';
-const HUMIO_START = window.HUMIO_START || '7d';
-const HUMIO_NAMESPACE = window.HUMIO_NAMESPACE || '';
+// Log provider configuration
+const LOG_PROVIDER   = window.LOG_PROVIDER   || '';
+const LOG_BASE_URL   = window.LOG_BASE_URL   || '';
+const LOG_REPO       = window.LOG_REPO       || '';
+const LOG_DATASOURCE = window.LOG_DATASOURCE || '';
+const LOG_TZ         = window.LOG_TZ         || 'Europe/Stockholm';
+const LOG_START      = window.LOG_START      || '7d';
+const LOG_NAMESPACE  = window.LOG_NAMESPACE  || '';
 
 console.log('[Modern Cyberpunk] Config:', { RESTART_RED_THRESHOLD, PRESETS, IS_LOCAL_MODE });
 

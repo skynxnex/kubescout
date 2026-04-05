@@ -11,20 +11,24 @@ class DashboardViewRendererTest : FreeSpec({
             val renderer = DashboardViewRenderer()
             val result = renderer.renderDashboard(
                 restartRedThreshold = 10,
-                humioBaseUrl = "https://humio.example.com",
-                humioRepo = "test-repo",
-                humioTimeZone = "UTC",
-                humioStart = "24h",
-                humioNamespace = "test-namespace",
+                logProvider = "humio",
+                logBaseUrl = "https://humio.example.com",
+                logRepo = "test-repo",
+                logDatasource = "Loki",
+                logTimeZone = "UTC",
+                logStart = "24h",
+                logNamespace = "test-namespace",
             )
 
             result shouldContain "Kubescout"
             result shouldContain "window.RESTART_RED_THRESHOLD = 10"
-            result shouldContain "HUMIO_BASE_URL = 'https://humio.example.com'"
-            result shouldContain "HUMIO_REPO = 'test-repo'"
-            result shouldContain "HUMIO_TZ = 'UTC'"
-            result shouldContain "HUMIO_START = '24h'"
-            result shouldContain "HUMIO_NAMESPACE = 'test-namespace'"
+            result shouldContain "LOG_PROVIDER = 'humio'"
+            result shouldContain "LOG_BASE_URL = 'https://humio.example.com'"
+            result shouldContain "LOG_REPO = 'test-repo'"
+            result shouldContain "LOG_DATASOURCE = 'Loki'"
+            result shouldContain "LOG_TZ = 'UTC'"
+            result shouldContain "LOG_START = '24h'"
+            result shouldContain "LOG_NAMESPACE = 'test-namespace'"
         }
 
         "should render dashboard with default parameters" {
@@ -33,8 +37,8 @@ class DashboardViewRendererTest : FreeSpec({
 
             result shouldContain "Kubescout"
             result shouldContain "window.RESTART_RED_THRESHOLD = 5"
-            result shouldContain "HUMIO_BASE_URL = ''"
-            result shouldContain "HUMIO_REPO = ''"
+            result shouldContain "LOG_BASE_URL = ''"
+            result shouldContain "LOG_REPO = ''"
         }
 
         "should render local dashboard with all parameters" {
@@ -45,11 +49,13 @@ class DashboardViewRendererTest : FreeSpec({
                 devKubeContext = "dev-context",
                 prodNamespace = "prod-ns",
                 prodKubeContext = "prod-context",
-                humioBaseUrl = "https://humio.example.com",
-                humioRepo = "test-repo",
-                humioTimeZone = "Europe/Stockholm",
-                humioStart = "7d",
-                humioNamespace = "test-namespace",
+                logProvider = "grafana",
+                logBaseUrl = "https://grafana.example.com",
+                logRepo = "test-repo",
+                logDatasource = "Loki",
+                logTimeZone = "Europe/Stockholm",
+                logStart = "7d",
+                logNamespace = "test-namespace",
             )
 
             result shouldContain "Kubescout"
@@ -62,10 +68,10 @@ class DashboardViewRendererTest : FreeSpec({
             val renderer = DashboardViewRenderer()
             val result = renderer.renderDashboard(
                 restartRedThreshold = 10,
-                humioBaseUrl = "Test\"Quote",
+                logBaseUrl = "Test\"Quote",
             )
 
-            result shouldContain "HUMIO_BASE_URL = 'Test\\\"Quote'"
+            result shouldContain "LOG_BASE_URL = 'Test\\\"Quote'"
         }
 
         "should contain CSS links" {
@@ -82,22 +88,25 @@ class DashboardViewRendererTest : FreeSpec({
                 devKubeContext = "dev-ctx",
                 prodNamespace = "prod-ns",
                 prodKubeContext = "prod-ctx",
-                humioBaseUrl = "https://humio.example.com",
-                humioRepo = "my-repo",
-                humioTimeZone = "Europe/Stockholm",
-                humioStart = "3d",
-                humioNamespace = "prod-namespace",
+                logProvider = "humio",
+                logBaseUrl = "https://humio.example.com",
+                logRepo = "my-repo",
+                logDatasource = "Loki",
+                logTimeZone = "Europe/Stockholm",
+                logStart = "3d",
+                logNamespace = "prod-namespace",
             )
 
             result shouldContain "\"dev-ns\""
             result shouldContain "\"dev-ctx\""
             result shouldContain "\"prod-ns\""
             result shouldContain "\"prod-ctx\""
-            result shouldContain "HUMIO_BASE_URL = 'https://humio.example.com'"
-            result shouldContain "HUMIO_REPO = 'my-repo'"
-            result shouldContain "HUMIO_TZ = 'Europe/Stockholm'"
-            result shouldContain "HUMIO_START = '3d'"
-            result shouldContain "HUMIO_NAMESPACE = 'prod-namespace'"
+            result shouldContain "LOG_PROVIDER = 'humio'"
+            result shouldContain "LOG_BASE_URL = 'https://humio.example.com'"
+            result shouldContain "LOG_REPO = 'my-repo'"
+            result shouldContain "LOG_TZ = 'Europe/Stockholm'"
+            result shouldContain "LOG_START = '3d'"
+            result shouldContain "LOG_NAMESPACE = 'prod-namespace'"
         }
 
         "renderLocalDashboard should replace IS_LOCAL_MODE with true" {
@@ -133,20 +142,20 @@ class DashboardViewRendererTest : FreeSpec({
             val renderer = DashboardViewRenderer()
             val result = renderer.renderDashboard(
                 restartRedThreshold = 1,
-                humioBaseUrl = "path\\to\\file",
+                logBaseUrl = "path\\to\\file",
             )
 
-            result shouldContain "HUMIO_BASE_URL = 'path\\\\to\\\\file'"
+            result shouldContain "LOG_BASE_URL = 'path\\\\to\\\\file'"
         }
 
         "jsString escapes newlines in values passed through renderDashboard" {
             val renderer = DashboardViewRenderer()
             val result = renderer.renderDashboard(
                 restartRedThreshold = 1,
-                humioRepo = "line1\nline2",
+                logRepo = "line1\nline2",
             )
 
-            result shouldContain "HUMIO_REPO = 'line1\\nline2'"
+            result shouldContain "LOG_REPO = 'line1\\nline2'"
         }
     }
 })

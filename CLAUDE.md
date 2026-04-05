@@ -13,7 +13,7 @@ The application provides real-time monitoring of Kubernetes services with featur
 - Auto-refresh every 60 seconds
 - Multiple visual themes with animated backgrounds
 - Dedicated view for problematic pods
-- Integration with Humio for log viewing
+- Integration with log platforms (Humio/LogScale, Grafana, Datadog) for log links
 
 ## Architecture
 
@@ -269,11 +269,13 @@ kubectl rollout restart deployment/kss -n your-namespace
 - `LOCAL_KUBE_CONTEXT=context-name` - Kubeconfig context
 - `DEV_NAMESPACE`, `DEV_KUBE_CONTEXT` - Dev preset
 - `PROD_NAMESPACE`, `PROD_KUBE_CONTEXT` - Prod preset
-- `HUMIO_BASE_URL` - Humio base URL (default: `https://cloud.humio.com`)
-- `HUMIO_REPO` - Humio repository (default: `""`)
-- `HUMIO_TZ` - Timezone for Humio queries (default: `Europe/Stockholm`)
-- `HUMIO_START` - Lookback window for Humio queries (default: `7d`)
-- `HUMIO_NAMESPACE` - Namespace filter injected into Humio log links (default: `""`)
+- `LOG_PROVIDER` - Log platform: `humio`, `grafana`, or `datadog` (leave empty to disable log links)
+- `LOG_BASE_URL` - Base URL for your log platform
+- `LOG_REPO` - Repository/index name (Humio only)
+- `LOG_DATASOURCE` - Datasource name (Grafana only, default: `Loki`)
+- `LOG_TZ` - Timezone for log queries (default: `UTC`)
+- `LOG_START` - Lookback window for log queries (default: `7d`)
+- `LOG_NAMESPACE` - Namespace filter injected into log queries
 - `DASHBOARD_RESTART_RED_THRESHOLD=3` - Restart count for red status
 - `MAX_REPLICAS=50` - Upper bound for scale-deployment operations
 
@@ -331,8 +333,7 @@ Before committing major changes:
 - `DashboardViewRenderer` extracted to `view/` package for rendering HTML with injected config
 - Routes.kt split into focused files: ServiceRoutes, PodRoutes, ConfigRoutes, DeploymentRoutes, WebSocketRoutes, DashboardRoutes
 - K8sServiceReaderFactory added — caches readers per kubeconfig context (ConcurrentHashMap)
-- AppConfig gained `maxReplicas` (env: `MAX_REPLICAS`, default 50) and `humioNamespace` (env: `HUMIO_NAMESPACE`, default `""`)
-- `HUMIO_START` default is `7d` (not `1h` as older docs stated)
+- AppConfig gained `maxReplicas` (env: `MAX_REPLICAS`, default 50) and multi-provider log config (`LOG_PROVIDER`, `LOG_BASE_URL`, `LOG_REPO`, `LOG_DATASOURCE`, `LOG_TZ`, `LOG_START`, `LOG_NAMESPACE`; `HUMIO_*` vars still accepted as fallback)
 - In-cluster dashboard now served at `/` (not `/dashboard`) to avoid static file route conflict
 - Security: WebSocket CSRF protection (Origin validated against Host / localhost regex), non-root user in Dockerfile, error messages sanitized before HTTP responses, `tailLines`/`sinceSeconds` have upper bounds, mutating POST routes require `X-Requested-By: kss` header
 - One ApiClient per K8sServiceReader; blocking K8s calls wrapped in `withContext(Dispatchers.IO)`; `println` replaced with logger

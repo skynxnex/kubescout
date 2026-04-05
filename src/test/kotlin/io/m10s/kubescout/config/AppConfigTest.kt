@@ -18,11 +18,13 @@ class AppConfigTest : FreeSpec({
                 prodKubeContext = "",
                 restartRedThreshold = 3,
                 maxReplicas = 50,
-                humioBaseUrl = "",
-                humioRepo = "",
-                humioTimeZone = "UTC",
-                humioStart = "7d",
-                humioNamespace = "",
+                logProvider = "",
+                logBaseUrl = "",
+                logRepo = "",
+                logDatasource = "Loki",
+                logTimeZone = "UTC",
+                logStart = "7d",
+                logNamespace = "",
                 inClusterNamespace = "",
             )
 
@@ -40,11 +42,13 @@ class AppConfigTest : FreeSpec({
                 prodKubeContext = "",
                 restartRedThreshold = 3,
                 maxReplicas = 50,
-                humioBaseUrl = "",
-                humioRepo = "",
-                humioTimeZone = "UTC",
-                humioStart = "7d",
-                humioNamespace = "",
+                logProvider = "",
+                logBaseUrl = "",
+                logRepo = "",
+                logDatasource = "Loki",
+                logTimeZone = "UTC",
+                logStart = "7d",
+                logNamespace = "",
                 inClusterNamespace = "",
             )
 
@@ -62,11 +66,13 @@ class AppConfigTest : FreeSpec({
                 prodKubeContext = "",
                 restartRedThreshold = 3,
                 maxReplicas = 50,
-                humioBaseUrl = "",
-                humioRepo = "",
-                humioTimeZone = "UTC",
-                humioStart = "7d",
-                humioNamespace = "",
+                logProvider = "",
+                logBaseUrl = "",
+                logRepo = "",
+                logDatasource = "Loki",
+                logTimeZone = "UTC",
+                logStart = "7d",
+                logNamespace = "",
                 inClusterNamespace = "",
             )
 
@@ -84,11 +90,13 @@ class AppConfigTest : FreeSpec({
                 prodKubeContext = "",
                 restartRedThreshold = 3,
                 maxReplicas = 50,
-                humioBaseUrl = "",
-                humioRepo = "",
-                humioTimeZone = "UTC",
-                humioStart = "7d",
-                humioNamespace = "",
+                logProvider = "",
+                logBaseUrl = "",
+                logRepo = "",
+                logDatasource = "Loki",
+                logTimeZone = "UTC",
+                logStart = "7d",
+                logNamespace = "",
                 inClusterNamespace = "",
             )
 
@@ -112,17 +120,31 @@ class AppConfigTest : FreeSpec({
             }
         }
 
-        "humioStart defaults to '7d' in loadFromEnv when env var is absent" {
-            if (System.getenv("HUMIO_START") == null) {
+        "logStart defaults to '7d' in loadFromEnv when env vars are absent" {
+            if (System.getenv("LOG_START") == null && System.getenv("HUMIO_START") == null) {
                 val config = AppConfigLoader.loadFromEnv()
-                config.humioStart shouldBe "7d"
+                config.logStart shouldBe "7d"
             }
         }
 
-        "humioBaseUrl defaults to 'https://cloud.humio.com' in loadFromEnv when env var is absent" {
-            if (System.getenv("HUMIO_BASE_URL") == null) {
+        "logBaseUrl defaults to 'https://cloud.humio.com' in loadFromEnv when env vars are absent" {
+            if (System.getenv("LOG_BASE_URL") == null && System.getenv("HUMIO_BASE_URL") == null) {
                 val config = AppConfigLoader.loadFromEnv()
-                config.humioBaseUrl shouldBe "https://cloud.humio.com"
+                config.logBaseUrl shouldBe "https://cloud.humio.com"
+            }
+        }
+
+        "logProvider defaults to empty string in loadFromEnv when env var is absent" {
+            if (System.getenv("LOG_PROVIDER") == null) {
+                val config = AppConfigLoader.loadFromEnv()
+                config.logProvider shouldBe ""
+            }
+        }
+
+        "logDatasource defaults to 'Loki' in loadFromEnv when env var is absent" {
+            if (System.getenv("LOG_DATASOURCE") == null) {
+                val config = AppConfigLoader.loadFromEnv()
+                config.logDatasource shouldBe "Loki"
             }
         }
     }

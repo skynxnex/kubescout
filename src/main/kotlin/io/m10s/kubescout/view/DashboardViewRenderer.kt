@@ -53,11 +53,13 @@ class DashboardViewRenderer(
 
     fun renderDashboard(
         restartRedThreshold: Int,
-        humioBaseUrl: String = "",
-        humioRepo: String = "",
-        humioTimeZone: String = "",
-        humioStart: String = "",
-        humioNamespace: String = "",
+        logProvider: String = "",
+        logBaseUrl: String = "",
+        logRepo: String = "",
+        logDatasource: String = "",
+        logTimeZone: String = "",
+        logStart: String = "",
+        logNamespace: String = "",
         inClusterNamespace: String = "",
     ): String {
         // Use same dashboard as local mode (unified dashboard)
@@ -69,11 +71,13 @@ class DashboardViewRenderer(
             devKubeContext = "",
             prodNamespace = "",
             prodKubeContext = "",
-            humioBaseUrl = humioBaseUrl,
-            humioRepo = humioRepo,
-            humioTimeZone = humioTimeZone,
-            humioStart = humioStart,
-            humioNamespace = humioNamespace
+            logProvider = logProvider,
+            logBaseUrl = logBaseUrl,
+            logRepo = logRepo,
+            logDatasource = logDatasource,
+            logTimeZone = logTimeZone,
+            logStart = logStart,
+            logNamespace = logNamespace,
         )
     }
 
@@ -85,11 +89,13 @@ class DashboardViewRenderer(
         devKubeContext: String,
         prodNamespace: String,
         prodKubeContext: String,
-        humioBaseUrl: String = "",
-        humioRepo: String = "",
-        humioTimeZone: String = "",
-        humioStart: String = "",
-        humioNamespace: String = "",
+        logProvider: String = "",
+        logBaseUrl: String = "",
+        logRepo: String = "",
+        logDatasource: String = "",
+        logTimeZone: String = "",
+        logStart: String = "",
+        logNamespace: String = "",
     ): String {
         // Combine hashes from both base and theme CSS files
         val baseHash = getResourceHash("dashboard/css/shared/base.css")
@@ -105,11 +111,13 @@ class DashboardViewRenderer(
             .replace("{{DEV_KUBE_CONTEXT}}", jsString(devKubeContext))
             .replace("{{PROD_NAMESPACE}}", jsString(prodNamespace))
             .replace("{{PROD_KUBE_CONTEXT}}", jsString(prodKubeContext))
-            .replace("{{HUMIO_BASE_URL}}", jsString(humioBaseUrl))
-            .replace("{{HUMIO_REPO}}", jsString(humioRepo))
-            .replace("{{HUMIO_TZ}}", jsString(humioTimeZone))
-            .replace("{{HUMIO_START}}", jsString(humioStart))
-            .replace("{{HUMIO_NAMESPACE}}", jsString(humioNamespace))
+            .replace("{{LOG_PROVIDER}}", jsString(logProvider))
+            .replace("{{LOG_BASE_URL}}", jsString(logBaseUrl))
+            .replace("{{LOG_REPO}}", jsString(logRepo))
+            .replace("{{LOG_DATASOURCE}}", jsString(logDatasource))
+            .replace("{{LOG_TZ}}", jsString(logTimeZone))
+            .replace("{{LOG_START}}", jsString(logStart))
+            .replace("{{LOG_NAMESPACE}}", jsString(logNamespace))
             .replace("{{CSS_HASH}}", cssHash)
             .replace("{{JS_HASH}}", jsHash)
     }
@@ -119,11 +127,13 @@ class DashboardViewRenderer(
         devKubeContext: String,
         prodNamespace: String,
         prodKubeContext: String,
-        humioBaseUrl: String = "",
-        humioRepo: String = "",
-        humioTimeZone: String = "",
-        humioStart: String = "",
-        humioNamespace: String = "",
+        logProvider: String = "",
+        logBaseUrl: String = "",
+        logRepo: String = "",
+        logDatasource: String = "",
+        logTimeZone: String = "",
+        logStart: String = "",
+        logNamespace: String = "",
     ): String {
         // Combine hashes from both base and theme CSS files
         val baseHash = getResourceHash("dashboard/css/shared/base.css")
@@ -137,11 +147,13 @@ class DashboardViewRenderer(
             .replace("{{DEV_KUBE_CONTEXT}}", jsString(devKubeContext))
             .replace("{{PROD_NAMESPACE}}", jsString(prodNamespace))
             .replace("{{PROD_KUBE_CONTEXT}}", jsString(prodKubeContext))
-            .replace("{{HUMIO_BASE_URL}}", jsString(humioBaseUrl))
-            .replace("{{HUMIO_REPO}}", jsString(humioRepo))
-            .replace("{{HUMIO_TZ}}", jsString(humioTimeZone))
-            .replace("{{HUMIO_START}}", jsString(humioStart))
-            .replace("{{HUMIO_NAMESPACE}}", jsString(humioNamespace))
+            .replace("{{LOG_PROVIDER}}", jsString(logProvider))
+            .replace("{{LOG_BASE_URL}}", jsString(logBaseUrl))
+            .replace("{{LOG_REPO}}", jsString(logRepo))
+            .replace("{{LOG_DATASOURCE}}", jsString(logDatasource))
+            .replace("{{LOG_TZ}}", jsString(logTimeZone))
+            .replace("{{LOG_START}}", jsString(logStart))
+            .replace("{{LOG_NAMESPACE}}", jsString(logNamespace))
             .replace("{{CSS_HASH}}", cssHash)
             .replace("{{JS_HASH}}", jsHash)
     }

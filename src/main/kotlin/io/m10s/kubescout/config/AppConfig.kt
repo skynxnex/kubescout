@@ -10,12 +10,14 @@ data class AppConfig(
     val prodKubeContext: String,
     val restartRedThreshold: Int,
     val maxReplicas: Int,
-    // Humio linking (optional)
-    val humioBaseUrl: String,
-    val humioRepo: String,
-    val humioTimeZone: String,
-    val humioStart: String,
-    val humioNamespace: String,
+    // Log viewer config (multi-provider: humio, grafana, datadog)
+    val logProvider: String,
+    val logBaseUrl: String,
+    val logRepo: String,
+    val logDatasource: String,
+    val logTimeZone: String,
+    val logStart: String,
+    val logNamespace: String,
     val inClusterNamespace: String,
 )
 
@@ -38,28 +40,38 @@ object AppConfigLoader {
 
         val maxReplicas: Int = System.getenv("MAX_REPLICAS")?.toIntOrNull() ?: 50
 
-        val humioBaseUrl: String = System.getenv("HUMIO_BASE_URL")
+        val logProvider: String = System.getenv("LOG_PROVIDER")
+            ?.trim()
+            ?.takeIf { it.isNotBlank() }
+            ?: ""
+
+        val logBaseUrl: String = (System.getenv("LOG_BASE_URL") ?: System.getenv("HUMIO_BASE_URL"))
             ?.trim()
             ?.trimEnd('/')
             ?.takeIf { it.isNotBlank() }
             ?: "https://cloud.humio.com"
 
-        val humioRepo: String = System.getenv("HUMIO_REPO")
+        val logRepo: String = (System.getenv("LOG_REPO") ?: System.getenv("HUMIO_REPO"))
             ?.trim()
             ?.takeIf { it.isNotBlank() }
             ?: ""
 
-        val humioTimeZone: String = System.getenv("HUMIO_TZ")
+        val logDatasource: String = System.getenv("LOG_DATASOURCE")
+            ?.trim()
+            ?.takeIf { it.isNotBlank() }
+            ?: "Loki"
+
+        val logTimeZone: String = (System.getenv("LOG_TZ") ?: System.getenv("HUMIO_TZ"))
             ?.trim()
             ?.takeIf { it.isNotBlank() }
             ?: "UTC"
 
-        val humioStart: String = System.getenv("HUMIO_START")
+        val logStart: String = (System.getenv("LOG_START") ?: System.getenv("HUMIO_START"))
             ?.trim()
             ?.takeIf { it.isNotBlank() }
             ?: "7d"
 
-        val humioNamespace: String = System.getenv("HUMIO_NAMESPACE")
+        val logNamespace: String = (System.getenv("LOG_NAMESPACE") ?: System.getenv("HUMIO_NAMESPACE"))
             ?.trim()
             ?.takeIf { it.isNotBlank() }
             ?: ""
@@ -82,11 +94,13 @@ object AppConfigLoader {
             prodKubeContext = prodKubeContext,
             restartRedThreshold = restartRedThreshold,
             maxReplicas = maxReplicas,
-            humioBaseUrl = humioBaseUrl,
-            humioRepo = humioRepo,
-            humioTimeZone = humioTimeZone,
-            humioStart = humioStart,
-            humioNamespace = humioNamespace,
+            logProvider = logProvider,
+            logBaseUrl = logBaseUrl,
+            logRepo = logRepo,
+            logDatasource = logDatasource,
+            logTimeZone = logTimeZone,
+            logStart = logStart,
+            logNamespace = logNamespace,
             inClusterNamespace = inClusterNamespace,
         )
     }

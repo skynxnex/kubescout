@@ -25,11 +25,13 @@ class ServiceControllerTest : FreeSpec({
         prodKubeContext = "",
         restartRedThreshold = 3,
         maxReplicas = 50,
-        humioBaseUrl = "",
-        humioRepo = "",
-        humioTimeZone = "UTC",
-        humioStart = "7d",
-        humioNamespace = "",
+        logProvider = "",
+        logBaseUrl = "",
+        logRepo = "",
+        logDatasource = "Loki",
+        logTimeZone = "UTC",
+        logStart = "7d",
+        logNamespace = "",
         inClusterNamespace = "",
     )
 

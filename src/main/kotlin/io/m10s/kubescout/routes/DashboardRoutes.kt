@@ -20,11 +20,13 @@ class DashboardController(
     fun dashboard(): ResponseEntity<String> {
         val html = dashboardViewRenderer.renderDashboard(
             restartRedThreshold = appConfig.restartRedThreshold,
-            humioBaseUrl = appConfig.humioBaseUrl,
-            humioRepo = appConfig.humioRepo,
-            humioTimeZone = appConfig.humioTimeZone,
-            humioStart = appConfig.humioStart,
-            humioNamespace = appConfig.humioNamespace,
+            logProvider = appConfig.logProvider,
+            logBaseUrl = appConfig.logBaseUrl,
+            logRepo = appConfig.logRepo,
+            logDatasource = appConfig.logDatasource,
+            logTimeZone = appConfig.logTimeZone,
+            logStart = appConfig.logStart,
+            logNamespace = appConfig.logNamespace,
             inClusterNamespace = appConfig.inClusterNamespace,
         )
         return ResponseEntity.ok()
@@ -42,11 +44,13 @@ class DashboardController(
             devKubeContext = appConfig.devKubeContext,
             prodNamespace = appConfig.prodNamespace,
             prodKubeContext = appConfig.prodKubeContext,
-            humioBaseUrl = appConfig.humioBaseUrl,
-            humioRepo = appConfig.humioRepo,
-            humioTimeZone = appConfig.humioTimeZone,
-            humioStart = appConfig.humioStart,
-            humioNamespace = appConfig.humioNamespace,
+            logProvider = appConfig.logProvider,
+            logBaseUrl = appConfig.logBaseUrl,
+            logRepo = appConfig.logRepo,
+            logDatasource = appConfig.logDatasource,
+            logTimeZone = appConfig.logTimeZone,
+            logStart = appConfig.logStart,
+            logNamespace = appConfig.logNamespace,
         )
         return ResponseEntity.ok()
             .contentType(MediaType.TEXT_HTML)
@@ -60,11 +64,13 @@ class DashboardController(
             devKubeContext = appConfig.devKubeContext,
             prodNamespace = appConfig.prodNamespace,
             prodKubeContext = appConfig.prodKubeContext,
-            humioBaseUrl = appConfig.humioBaseUrl,
-            humioRepo = appConfig.humioRepo,
-            humioTimeZone = appConfig.humioTimeZone,
-            humioStart = appConfig.humioStart,
-            humioNamespace = appConfig.humioNamespace,
+            logProvider = appConfig.logProvider,
+            logBaseUrl = appConfig.logBaseUrl,
+            logRepo = appConfig.logRepo,
+            logDatasource = appConfig.logDatasource,
+            logTimeZone = appConfig.logTimeZone,
+            logStart = appConfig.logStart,
+            logNamespace = appConfig.logNamespace,
         )
         return ResponseEntity.ok()
             .contentType(MediaType.TEXT_HTML)

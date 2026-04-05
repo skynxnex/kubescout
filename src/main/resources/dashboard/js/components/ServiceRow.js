@@ -142,16 +142,31 @@ export const ServiceRow = defineComponent({
       const svc = props.service;
       const name = String(svc.serviceName || svc.name || '');
 
-      // Build Humio URL for the service link — safe since it uses window config + name
-      const humioBase = String(window.HUMIO_BASE_URL || '').replace(/\/+$/, '');
-      const humioRepo = encodeURIComponent(String(window.HUMIO_REPO || '').trim());
-      const humioNs = String(svc.namespace || window.HUMIO_NAMESPACE || '');
-      const humioQuery = encodeURIComponent(
-        `kubernetes.namespace_name = "${humioNs}"\n| kubernetes.labels.app = "*${name.replaceAll('"', '')}*"`
-      );
-      const humioUrl = humioBase
-        ? `${humioBase}/${humioRepo}/search?query=${humioQuery}&live=false&newestAtBottom=true&widgetType=list-view`
-        : '#';
+      // Build provider-agnostic log URL for the service link
+      const logProvider = String(window.LOG_PROVIDER || '').trim().toLowerCase();
+      const logBase = String(window.LOG_BASE_URL || '').replace(/\/+$/, '');
+      const logNs = String(svc.namespace || window.LOG_NAMESPACE || '');
+      const svcName = name.replaceAll('"', '');
+      const logStart = String(window.LOG_START || '').trim() || '7d';
+      let serviceUrl = '';
+
+      if (logProvider === 'humio' && logBase) {
+        const logRepo = encodeURIComponent(String(window.LOG_REPO || '').trim());
+        const humioQuery = encodeURIComponent(
+          `kubernetes.namespace_name = "${logNs}"\n| kubernetes.labels.app = "*${svcName}*"`
+        );
+        serviceUrl = `${logBase}/${logRepo}/search?query=${humioQuery}&live=false&newestAtBottom=true&widgetType=list-view&start=${encodeURIComponent(logStart)}`;
+      } else if (logProvider === 'grafana' && logBase) {
+        const datasource = String(window.LOG_DATASOURCE || '').trim();
+        const left = JSON.stringify({
+          datasource,
+          queries: [{ refId: 'A', expr: `{namespace="${logNs}", app="${svcName}"}` }],
+          range: { from: `now-${logStart}`, to: 'now' }
+        });
+        serviceUrl = `${logBase}/explore?orgId=1&left=${encodeURIComponent(left)}`;
+      } else if (logProvider === 'datadog' && logBase) {
+        serviceUrl = `${logBase}/logs?query=${encodeURIComponent(`kube_namespace:${logNs} service:${svcName}`)}&from_ts=now-${encodeURIComponent(logStart)}&to_ts=now`;
+      }
 
       // Expand button
       const expandBtn = h('button', {
@@ -191,13 +206,15 @@ export const ServiceRow = defineComponent({
         h('div', { style: 'display: flex; align-items: center; gap: 4px;' }, [expandBtn, restartBtn, logsBtn])
       );
 
-      // Service name as link to Humio
-      const serviceLink = h('a', {
-        href: humioUrl,
-        class: 'service-link',
-        target: '_blank',
-        rel: 'noopener'
-      }, name); // textContent — safe
+      // Service name as link to log provider (or plain text if no provider configured)
+      const serviceLink = serviceUrl
+        ? h('a', {
+            href: serviceUrl,
+            class: 'service-link',
+            target: '_blank',
+            rel: 'noopener'
+          }, name) // textContent — safe
+        : h('span', { class: 'service-link' }, name);
 
       const nameCell = h('td', { 'data-field': 'serviceName' }, [serviceLink]);
 
