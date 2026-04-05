@@ -18,7 +18,7 @@ spec:
       serviceAccountName: kubescout
       containers:
         - name: kubescout
-          image: kubescout:latest
+          image: skynxnex/kubescout:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

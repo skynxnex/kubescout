@@ -105,7 +105,7 @@ yarn stop       # stop all containers
 | `yarn stop` | Stop and remove all containers |
 | `yarn push` | Build multi-arch image (amd64 + arm64) and push to registry |
 
-`yarn up` always pulls the latest `:master` image from `kubescout`. Run `yarn push` first to publish a new version, then others can pick it up with `yarn up` without building locally. Use `yarn up-dev` for local development with live reload.
+`yarn up` always pulls the latest `:master` image from `skynxnex/kubescout`. Run `yarn push` first to publish a new version, then others can pick it up with `yarn up` without building locally. Use `yarn up-dev` for local development with live reload.
 
 ## API Endpoints
 
