@@ -388,7 +388,7 @@ fun fetchPodLogs(...): PodLogsResponse {
 - Network bandwidth consumption
 
 **Fix:**
-Implement per-IP or per-user rate limiting using Ktor middleware:
+Implement per-IP or per-user rate limiting using a Spring HandlerInterceptor:
 
 ```kotlin
 install(RateLimiting) {

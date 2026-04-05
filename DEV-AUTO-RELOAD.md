@@ -121,7 +121,7 @@ find /app/src -name "*.kt" -printf "%T@ %p\n" | md5sum
 
 Frontend files (JS/CSS/HTML) live in `src/main/resources/` which is:
 - Mounted as a Docker volume
-- Served directly by Ktor
+- Served directly by Spring Boot
 - No rebuild needed!
 
 ### Crash Recovery

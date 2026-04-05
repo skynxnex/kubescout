@@ -3,7 +3,7 @@
 ## Overview
 
 Kubescout (Kubernetes Service Summary) is a Kubernetes service monitoring dashboard built with:
-- **Backend**: Kotlin + Ktor (RESTful API)
+- **Backend**: Kotlin + Spring Boot (RESTful API)
 - **Frontend**: Vue 3 (CDN, Composition API), HTML5, CSS3
 - **Purpose**: Monitor Kubernetes services, pods, and resource usage with a visual dashboard
 
@@ -21,7 +21,7 @@ The application provides real-time monitoring of Kubernetes services with featur
 kss/
 ├── src/main/
 │   ├── kotlin/org/example/
-│   │   ├── Application.kt                    # Ktor application entry point
+│   │   ├── Application.kt                    # Spring Boot application entry point
 │   │   ├── routes/
 │   │   │   ├── Routes.kt                     # Shared helpers + registerRoutes()
 │   │   │   ├── ServiceRoutes.kt              # /services, /services-local, /namespaces-local, /contexts-local
@@ -36,7 +36,7 @@ kss/
 │   │   │   └── MetricsCache.kt               # Short-lived cache for K8s metrics-server responses
 │   │   ├── ratelimit/
 │   │   │   ├── RateLimiter.kt                # Per-IP sliding-window rate limiter
-│   │   │   └── RateLimitPlugin.kt            # Ktor plugin wiring
+│   │   │   └── RateLimitPlugin.kt            # Spring Boot interceptor wiring
 │   │   ├── view/DashboardViewRenderer.kt     # Renders dashboard HTML with injected config
 │   │   ├── config/AppConfig.kt               # Environment configuration
 │   │   └── model/Models.kt                   # Data models
@@ -227,7 +227,7 @@ yarn up-dev
 mvn package
 
 # Build Docker (runtime)
-docker build --target runtime -t ktor-api .
+docker build --target runtime -t kubescout .
 
 # Build multi-arch for EKS
 yarn push
@@ -299,7 +299,7 @@ kubectl rollout restart deployment/kss -n your-namespace
 
 Use these specialized agents for different tasks:
 
-- **backend-developer**: Kotlin/Ktor backend changes, API endpoints, K8s client logic
+- **backend-developer**: Kotlin/Spring Boot backend changes, API endpoints, K8s client logic
 - **frontend-design-developer**: UI/UX changes, new themes, CSS styling, HTML structure
 - **code-pathfinder**: Understanding code flows, tracing bugs, exploring architecture
 - **test-and-lint-enforcer**: Code quality checks before commit

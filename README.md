@@ -1,6 +1,6 @@
 # Kubescout — Kubernetes Service Summary
 
-Kubescout is a Kotlin/Ktor dashboard for monitoring Kubernetes services, pods, and resource usage. It provides a visual overview of service health, pod-level CPU/memory details, auto-refresh every 60 seconds, and a suite of operational tools including pod log streaming, events timeline, deployment rollback, an exec terminal, ConfigMap/Secret viewer, and service endpoint/ingress inspection — all served through a browser UI with six visual themes and animated backgrounds.
+Kubescout is a Kotlin/Spring Boot dashboard for monitoring Kubernetes services, pods, and resource usage. It provides a visual overview of service health, pod-level CPU/memory details, auto-refresh every 60 seconds, and a suite of operational tools including pod log streaming, events timeline, deployment rollback, an exec terminal, ConfigMap/Secret viewer, and service endpoint/ingress inspection — all served through a browser UI with six visual themes and animated backgrounds.
 
 ## Getting Started (locally)
 
