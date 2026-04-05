@@ -1,7 +1,7 @@
-name: kss
+name: kubescout
 
 services:
-  kss:
+  kubescout:
     image: kubescout:latest
     pull_policy: always
     ports:
@@ -12,7 +12,7 @@ services:
       - ~/.aws:/root/.aws
     env_file:
       - .env
-  kss-dev:
+  kubescout-dev:
     build:
       context: .
       target: dev

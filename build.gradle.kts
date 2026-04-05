@@ -5,7 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.spring") version "2.1.20"
 }
 
-group = "io.m10s.kss"
+group = "io.m10s.kubescout"
 version = "1.0-SNAPSHOT"
 
 java {
@@ -47,5 +47,5 @@ tasks.withType<Test> {
 }
 
 tasks.bootJar {
-    mainClass.set("io.m10s.kss.ApplicationKt")
+    mainClass.set("io.m10s.kubescout.ApplicationKt")
 }

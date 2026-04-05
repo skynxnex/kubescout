@@ -1,7 +1,7 @@
 /**
  * Vue 3 Dashboard Store - Fas 3
  *
- * Central reactive store for the KSS dashboard.
+ * Central reactive store for the Kubescout dashboard.
  * Uses the same localStorage keys as state-manager.js so the two systems
  * can read/write each other's persisted values without conflict.
  *

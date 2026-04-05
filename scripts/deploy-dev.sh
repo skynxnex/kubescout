@@ -19,6 +19,6 @@ echo "==> Applying Kubernetes manifests (dev)"
 kubectl apply -f k8s/deployment-dev.yaml
 
 echo "==> Rolling out deployment (dev)"
-kubectl rollout restart deployment/kss -n your-namespace
+kubectl rollout restart deployment/kubescout -n your-namespace
 
 echo "✅ Deploy (dev) complete"

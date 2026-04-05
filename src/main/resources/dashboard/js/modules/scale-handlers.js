@@ -80,7 +80,7 @@ export async function performScaleDeployment(serviceName, namespace, context, re
 
     const response = await fetch(`${apiEndpoint('scale-deployment')}?${params.toString()}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Requested-By': 'kss' },
+      headers: { 'Content-Type': 'application/json', 'X-Requested-By': 'kubescout' },
       body: JSON.stringify({
         deploymentName: serviceName,
         namespace,

@@ -1,8 +1,8 @@
-# Project: KSS - Kubernetes Service Summary
+# Project: Kubescout - Kubernetes Service Summary
 
 ## Overview
 
-KSS (Kubernetes Service Summary) is a Kubernetes service monitoring dashboard built with:
+Kubescout (Kubernetes Service Summary) is a Kubernetes service monitoring dashboard built with:
 - **Backend**: Kotlin + Ktor (RESTful API)
 - **Frontend**: Vue 3 (CDN, Composition API), HTML5, CSS3
 - **Purpose**: Monitor Kubernetes services, pods, and resource usage with a visual dashboard

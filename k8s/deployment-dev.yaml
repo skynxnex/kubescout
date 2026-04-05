@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kss
+  name: kubescout
   namespace: your-namespace
   labels:
-    app: kss
+    app: kubescout
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kss
+      app: kubescout
   template:
     metadata:
       labels:
-        app: kss
+        app: kubescout
     spec:
-      serviceAccountName: kss
+      serviceAccountName: kubescout
       containers:
-        - name: kss
+        - name: kubescout
           image: kubescout:latest
           imagePullPolicy: Always
           ports:
@@ -38,14 +38,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: kss
+  name: kubescout
   namespace: your-namespace
   labels:
-    app: kss
+    app: kubescout
 spec:
   type: ClusterIP
   selector:
-    app: kss
+    app: kubescout
   ports:
     - name: http
       port: 80
@@ -54,7 +54,7 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kss
+  name: kubescout
   namespace: your-namespace
 # Add imagePullSecrets here if your registry requires authentication, e.g.:
 # imagePullSecrets:
@@ -63,7 +63,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: kss
+  name: kubescout
   namespace: your-namespace
 rules:
   # Core API resources - read-only access
@@ -129,12 +129,12 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: kss
+  name: kubescout
   namespace: your-namespace
 subjects:
   - kind: ServiceAccount
-    name: kss
+    name: kubescout
 roleRef:
   kind: Role
-  name: kss
+  name: kubescout
   apiGroup: rbac.authorization.k8s.io

@@ -44,7 +44,7 @@ export async function performRollback(deploymentName, namespace, targetRevision,
 
   const response = await fetch(`${apiEndpoint('rollback-deployment')}?${params.toString()}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Requested-By': 'kss' },
+    headers: { 'Content-Type': 'application/json', 'X-Requested-By': 'kubescout' },
     body: JSON.stringify({ deploymentName, namespace, targetRevision })
   });
 
@@ -230,7 +230,7 @@ export async function performRestart(serviceName, namespace, context) {
 
   const response = await fetch(`${apiEndpoint('restart-deployment')}?${params.toString()}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Requested-By': 'kss' },
+    headers: { 'Content-Type': 'application/json', 'X-Requested-By': 'kubescout' },
     body: JSON.stringify({ serviceName, namespace })
   });
 

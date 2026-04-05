@@ -8,4 +8,4 @@ server:
 
 logging:
   level:
-    io.m10s.kss: DEBUG
+    io.m10s.kubescout: DEBUG
